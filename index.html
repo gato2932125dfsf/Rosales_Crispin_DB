@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio BD II | Rosales Crisin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CANVAS DE PARTÍCULAS -->
+<canvas id="particles"></canvas>
+
+<!-- ORBS FLOTANTES -->
+<div class="bg-orbs">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="orb o4"></div>
+</div>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<header id="navbar">
+  <nav class="nav-inner">
+    <button class="logo" data-view="inicio">
+      <article class="project-card">
+      <img src="imagenes/logoupla.png">
+      </article>
+      <span class="logo-name">Rosales Crispin <span class="logo-dot">.</span></span>
+    </button>
+
+    <ul class="nav-links">
+      <li><button class="nav-btn active" data-view="inicio"><i class="fa-solid fa-house-chimney"></i><span>Inicio</span></button></li>
+      <li class="nav-dropdown" id="navDropdown">
+        <button class="nav-btn" id="unidadesBtn">
+          <i class="fa-solid fa-layer-group"></i><span>Unidades</span>
+          <i class="fa-solid fa-chevron-down fa-xs drop-arrow"></i>
+        </button>
+        <div class="dropdown-panel" id="dropdownPanel">
+          <div class="dp-header">Unidades del Curso</div>
+          <button class="dp-item" data-view="u1">
+            <span class="dp-chip dp1">01</span>
+            <div><strong>Fundamentos</strong><small>T01–T04 · Semanas 1–4</small></div>
+            <i class="fa-solid fa-arrow-right dp-arrow"></i>
+          </button>
+          <button class="dp-item" data-view="u2">
+            <span class="dp-chip dp2">02</span>
+            <div><strong>Diseño Avanzado</strong><small>T05–T08 · Semanas 5–8</small></div>
+            <i class="fa-solid fa-arrow-right dp-arrow"></i>
+          </button>
+          <button class="dp-item" data-view="u3">
+            <span class="dp-chip dp3">03</span>
+            <div><strong>Implementación</strong><small>T09–T12 · Semanas 9–12</small></div>
+            <i class="fa-solid fa-arrow-right dp-arrow"></i>
+          </button>
+          <button class="dp-item" data-view="u4">
+            <span class="dp-chip dp4">04</span>
+            <div><strong>Optimización</strong><small>T13–T16 · Semanas 13–16</small></div>
+            <i class="fa-solid fa-arrow-right dp-arrow"></i>
+          </button>
+        </div>
+      </li>
+      <li><button class="nav-btn" data-view="login"><i class="fa-solid fa-lock"></i><span>Ingresar</span></button></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="md-top">
+    <span class="md-title">Navegación</span>
+    <button class="md-close" id="mdClose"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <button class="md-btn" data-view="inicio"><i class="fa-solid fa-house-chimney"></i> Inicio</button>
+  <div class="md-divider">Unidades</div>
+  <button class="md-btn" data-view="u1"><span class="dp-chip dp1 sm">01</span> Fundamentos</button>
+  <button class="md-btn" data-view="u2"><span class="dp-chip dp2 sm">02</span> Diseño Avanzado</button>
+  <button class="md-btn" data-view="u3"><span class="dp-chip dp3 sm">03</span> Implementación</button>
+  <button class="md-btn" data-view="u4"><span class="dp-chip dp4 sm">04</span> Optimización</button>
+  <button class="md-btn md-login" data-view="login"><i class="fa-solid fa-lock"></i> Panel Admin</button>
+</div>
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<!-- ══════════════ APP ══════════════ -->
+<main id="app">
+
+  <!-- ▸ INICIO ◂ -->
+  <section class="view active" id="view-inicio">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-left">
+          <div class="hero-eyebrow">
+            <span class="eyebrow-dot"></span>
+            Ingeniería de Sistemas y Computacion · UPLA · 2026
+          </div>
+          <h1 class="hero-title">
+            Rosales Crispin
+            <span class="ht-grad">Aristoteles Onassis</span>
+          </h1>
+          <p class="hero-desc">
+            Portafolio Académico de <em>Base de Datos II</em> —
+            16 trabajos documentados en 4 unidades temáticas.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary ripple" data-view="u1">
+              <i class="fa-solid fa-folder-open"></i> Ver Trabajos
+            </button>
+            <div class="hero-socials">
+              <a href="#" class="social-pill" title="GitHub"><i class="fa-brands fa-github"></i></a>
+              <a href="#" class="social-pill" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://x.com" class="social-pill" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="profile-card">
+            <div class="pc-glow"></div>
+            <div class="pc-ribbon"></div>
+            <div class="pc-head">
+              <div class="pc-avatar">
+                <span>RD</span>
+                <div class="pc-avatar-ring"></div>
+              </div>
+              <div>
+                <p class="pc-name">Rosales Crispin Aristoteles Onassis.</p>
+                <p class="pc-role"><span class="status-dot"></span> Estudiante · BD II</p>
+              </div>
+            </div>
+            <div class="pc-stats">
+              <div class="pcs-item">
+                <strong class="pcs-num" data-count="16">0</strong>
+                <span>Trabajos</span>
+              </div>
+              <div class="pcs-sep"></div>
+              <div class="pcs-item">
+                <strong class="pcs-num" data-count="4">0</strong>
+                <span>Unidades</span>
+              </div>
+              <div class="pcs-sep"></div>
+              <div class="pcs-item">
+                <strong class="pcs-num" data-count="2024">0</strong>
+                <span>Ciclo</span>
+              </div>
+            </div>
+            <div class="pc-tech">
+              <span class="tech-tag">SQL</span>
+              <span class="tech-tag">PL/pgSQL</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">Oracle</span>
+              <span class="tech-tag">PostgreSQL</span>
+            </div>
+            <div class="pc-units-nav">
+              <button class="pcu ripple" data-view="u1">U1 <i class="fa-solid fa-arrow-right fa-xs"></i></button>
+              <button class="pcu ripple" data-view="u2">U2 <i class="fa-solid fa-arrow-right fa-xs"></i></button>
+              <button class="pcu ripple" data-view="u3">U3 <i class="fa-solid fa-arrow-right fa-xs"></i></button>
+              <button class="pcu ripple" data-view="u4">U4 <i class="fa-solid fa-arrow-right fa-xs"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCROLL INDICATOR -->
+      <div class="scroll-hint">
+        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+        <span>Scroll</span>
+      </div>
+    </div>
+
+    <!-- ABOUT STRIP -->
+    <div class="about-strip">
+      <div class="as-inner">
+        <div class="as-intro">
+          <div class="as-icon"><i class="fa-solid fa-user-graduate"></i></div>
+          <div>
+            <h3>Sobre mí</h3>
+            <p>Estudiante apasionado de la UPLA enfocado en gestión de datos y arquitecturas de sistemas complejos. Este portafolio documenta mi evolución en Base de Datos II.</p>
+          </div>
+        </div>
+        <div class="as-divider"></div>
+        <div class="as-metrics">
+          <div class="as-metric"><i class="fa-solid fa-database"></i><div><strong>Base de Datos II</strong><span>Curso Principal</span></div></div>
+          <div class="as-metric"><i class="fa-solid fa-layer-group"></i><div><strong>4 Unidades</strong><span>Temáticas</span></div></div>
+          <div class="as-metric"><i class="fa-solid fa-file-code"></i><div><strong>16 Trabajos</strong><span>Completados</span></div></div>
+          <div class="as-metric"><i class="fa-solid fa-university"></i><div><strong>UPLA</strong><span>Univerisdad </span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNIDADES PREVIEW -->
+    <div class="units-preview">
+      <div class="up-inner">
+        <div class="up-header">
+          <h2>Unidades del Curso</h2>
+          <p>Selecciona una unidad para explorar sus trabajos</p>
+        </div>
+        <div class="up-grid">
+          <button class="up-card ripple" data-view="u1">
+            <div class="upc-num">01</div>
+            <div class="upc-body">
+              <h3>Fundamentos</h3>
+              <p>Arquitectura relacional, EER, álgebra y SQL avanzado</p>
+              <div class="upc-meta"><span><i class="fa-solid fa-file-lines"></i> 4 trabajos</span><span><i class="fa-regular fa-clock"></i> Sem. 1–4</span></div>
+            </div>
+            <i class="fa-solid fa-arrow-right upc-arrow"></i>
+          </button>
+          <button class="up-card up-c2 ripple" data-view="u2">
+            <div class="upc-num upc-n2">02</div>
+            <div class="upc-body">
+              <h3>Diseño Avanzado</h3>
+              <p>Stored procedures, triggers, funciones y vistas</p>
+              <div class="upc-meta"><span><i class="fa-solid fa-file-lines"></i> 4 trabajos</span><span><i class="fa-regular fa-clock"></i> Sem. 5–8</span></div>
+            </div>
+            <i class="fa-solid fa-arrow-right upc-arrow"></i>
+          </button>
+          <button class="up-card up-c3 ripple" data-view="u3">
+            <div class="upc-num upc-n3">03</div>
+            <div class="upc-body">
+              <h3>Implementación</h3>
+              <p>Concurrencia, seguridad, backup y replicación</p>
+              <div class="upc-meta"><span><i class="fa-solid fa-file-lines"></i> 4 trabajos</span><span><i class="fa-regular fa-clock"></i> Sem. 9–12</span></div>
+            </div>
+            <i class="fa-solid fa-arrow-right upc-arrow"></i>
+          </button>
+          <button class="up-card up-c4 ripple" data-view="u4">
+            <div class="upc-num upc-n4">04</div>
+            <div class="upc-body">
+              <h3>Optimización</h3>
+              <p>NoSQL, Data Warehouse, minería y proyecto final</p>
+              <div class="upc-meta"><span><i class="fa-solid fa-file-lines"></i> 4 trabajos</span><span><i class="fa-regular fa-clock"></i> Sem. 13–16</span></div>
+            </div>
+            <i class="fa-solid fa-arrow-right upc-arrow"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ▸ UNIDAD I ◂ -->
+  <section class="view" id="view-u1">
+    <div class="unit-page">
+      <div class="unit-page-hero uph-1">
+        <div class="uph-content">
+          <div class="uph-label">Base de Datos II</div>
+          <h1><span class="uph-num">01</span> Fundamentos</h1>
+          <p>Arquitectura relacional · Modelo EER · Álgebra · SQL Avanzado</p>
+        </div>
+        <div class="unit-pill-nav">
+          <button class="upn active" data-view="u1">I</button>
+          <button class="upn" data-view="u2">II</button>
+          <button class="upn" data-view="u3">III</button>
+          <button class="upn" data-view="u4">IV</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="grid-u1">
+        <article class="wcard" data-key="u1_t01" data-unit="1" data-title="Arquitectura de Datos Relacionales" data-desc="Análisis y diseño de esquemas relacionales complejos para sistemas empresariales de gran escala.">
+          <div class="wc-bar"></div>
+          <div class="wc-top"><span class="wc-num">T01</span><span class="wc-week">Semana 1</span></div>
+          <h3>Introduccion a la Arquitectura de Base de Datos</h3>
+          <p>Análisis y diseño de esquemas relacionales complejos para sistemas empresariales.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">2</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Modelado Entidad-Relación</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Normalización 3FN</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u1_t01"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download ripple" data-key="u1_t01"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+
+        <article class="wcard" data-key="u1_t02" data-unit="1" data-title="Modelo Entidad-Relación Extendido" data-desc="Diagramas EER con generalización, especialización y agregación para sistemas complejos.">
+          <div class="wc-bar"></div>
+          <div class="wc-top"><span class="wc-num">T02</span><span class="wc-week">Semana 2</span></div>
+          <h3>Gestores de Base de datos</h3>
+          <p>Diagramas EER con generalización, especialización y agregación.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">3</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Diagrama EER</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Especialización / Generalización</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Conversión a Tablas</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u1_t02"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download ripple" data-key="u1_t02"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+
+        <article class="wcard" data-key="u1_t03" data-unit="1" data-title="Álgebra Relacional" data-desc="Operaciones fundamentales del álgebra relacional aplicadas sobre bases de datos reales.">
+          <div class="wc-bar"></div>
+          <div class="wc-top"><span class="wc-num">T03</span><span class="wc-week">Semana 3</span></div>
+          <h3>Diseño Arquitectura de base de Datos</h3>
+          <p>Operaciones fundamentales del álgebra relacional aplicadas sobre BD reales.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">2</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Operaciones Básicas</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Consultas Derivadas</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u1_t03"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download ripple" data-key="u1_t03"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+
+        <article class="wcard" data-key="u1_t04" data-unit="1" data-title="SQL Avanzado y Subconsultas" data-desc="Consultas complejas con CTEs, subconsultas correlacionadas y funciones de ventana.">
+          <div class="wc-bar"></div>
+          <div class="wc-top"><span class="wc-num">T04</span><span class="wc-week">Semana 4</span></div>
+          <h3>Consultas con Inner join Multiple</h3>s
+          <p>Consultas complejas con CTEs, subconsultas correlacionadas y funciones de ventana.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">4</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Subconsultas Correlacionadas</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Common Table Expressions</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Funciones de Ventana</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Optimización de Consultas</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u1_t04"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download ripple" data-key="u1_t04"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ▸ UNIDAD II ◂ -->
+  <section class="view" id="view-u2">
+    <div class="unit-page">
+      <div class="unit-page-hero uph-2">
+        <div class="uph-content">
+          <div class="uph-label">Base de Datos II</div>
+          <h1><span class="uph-num uph-n2">02</span> Diseño Avanzado</h1>
+          <p>Stored Procedures · Triggers · Funciones · Vistas e Índices</p>
+        </div>
+        <div class="unit-pill-nav">
+          <button class="upn" data-view="u1">I</button>
+          <button class="upn active" data-view="u2">II</button>
+          <button class="upn" data-view="u3">III</button>
+          <button class="upn" data-view="u4">IV</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="grid-u2">
+        <article class="wcard wc-u2" data-key="u2_t05" data-unit="2" data-title="Procedimientos Almacenados" data-desc="Stored procedures con lógica de negocio encapsulada en el motor de base de datos.">
+          <div class="wc-bar wc-bar2"></div>
+          <div class="wc-top"><span class="wc-num wn2">T05</span><span class="wc-week ww2">Semana 5</span></div>
+          <h3>----Falta----</h3>
+          <p>Stored procedures con lógica de negocio encapsulada en el motor de BD.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">3</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Procedimientos con parámetros</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Manejo de excepciones</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Transacciones ACID</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u2_t05"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl2 ripple" data-key="u2_t05"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u2" data-key="u2_t06" data-unit="2" data-title="Triggers y Automatización" data-desc="Disparadores para automatizar integridad referencial y auditoría de cambios en BD.">
+          <div class="wc-bar wc-bar2"></div>
+          <div class="wc-top"><span class="wc-num wn2">T06</span><span class="wc-week ww2">Semana 6</span></div>
+          <h3>----Falta----</h3>
+          <p>Disparadores para automatizar integridad referencial y auditoría de cambios.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">2</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Triggers BEFORE / AFTER</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Auditoría de tablas</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u2_t06"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl2 ripple" data-key="u2_t06"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u2" data-key="u2_t07" data-unit="2" data-title="Funciones de Usuario" data-desc="UDFs escalares y de tabla para cálculos reutilizables en consultas SQL avanzadas.">
+          <div class="wc-bar wc-bar2"></div>
+          <div class="wc-top"><span class="wc-num wn2">T07</span><span class="wc-week ww2">Semana 7</span></div>
+          <h3>----Falta----</h3>
+          <p>UDFs escalares y de tabla para cálculos reutilizables en consultas SQL.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">2</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Funciones Escalares</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Funciones de Tabla</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u2_t07"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl2 ripple" data-key="u2_t07"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u2" data-key="u2_t08" data-unit="2" data-title="Vistas e Índices" data-desc="Vistas materializadas e índices compuestos para optimizar el rendimiento en consultas.">
+          <div class="wc-bar wc-bar2"></div>
+          <div class="wc-top"><span class="wc-num wn2">T08</span><span class="wc-week ww2">Semana 8</span></div>
+          <h3>----Falta----</h3>
+          <p>Vistas materializadas e índices compuestos para optimizar rendimiento.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">3</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Vistas Simples y Complejas</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Índices B-Tree y Hash</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Plan de Ejecución</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u2_t08"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl2 ripple" data-key="u2_t08"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ▸ UNIDAD III ◂ -->
+  <section class="view" id="view-u3">
+    <div class="unit-page">
+      <div class="unit-page-hero uph-3">
+        <div class="uph-content">
+          <div class="uph-label">Base de Datos II</div>
+          <h1><span class="uph-num uph-n3">03</span> Implementación</h1>
+          <p>Control de Concurrencia · Seguridad · Backup · Replicación</p>
+        </div>
+        <div class="unit-pill-nav">
+          <button class="upn" data-view="u1">I</button>
+          <button class="upn" data-view="u2">II</button>
+          <button class="upn active" data-view="u3">III</button>
+          <button class="upn" data-view="u4">IV</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="grid-u3">
+        <article class="wcard wc-u3" data-key="u3_t09" data-unit="3" data-title="Control de Concurrencia" data-desc="Transacciones concurrentes, deadlocks y mecanismos de bloqueo en SGBD modernos.">
+          <div class="wc-bar wc-bar3"></div>
+          <div class="wc-top"><span class="wc-num wn3">T09</span><span class="wc-week ww3">Semana 9</span></div>
+          <h3>----Falta----</h3>
+          <p>Transacciones concurrentes, deadlocks y mecanismos de bloqueo en SGBD.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">3</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Niveles de Aislamiento</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Detección de Deadlocks</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>MVCC</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u3_t09"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl3 ripple" data-key="u3_t09"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u3" data-key="u3_t10" data-unit="3" data-title="Seguridad y Roles" data-desc="Gestión de privilegios, roles y políticas de seguridad a nivel de fila en PostgreSQL.">
+          <div class="wc-bar wc-bar3"></div>
+          <div class="wc-top"><span class="wc-num wn3">T10</span><span class="wc-week ww3">Semana 10</span></div>
+          <h3>----Falta----</h3>
+          <p>Gestión de privilegios, roles y políticas de seguridad a nivel de fila.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">4</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>GRANT / REVOKE</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Row Level Security</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Encriptación de Datos</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Auditoría de Accesos</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u3_t10"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl3 ripple" data-key="u3_t10"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u3" data-key="u3_t11" data-unit="3" data-title="Backup y Recuperación" data-desc="Estrategias de respaldo incremental, diferencial y completo con planes de recuperación.">
+          <div class="wc-bar wc-bar3"></div>
+          <div class="wc-top"><span class="wc-num wn3">T11</span><span class="wc-week ww3">Semana 11</span></div>
+          <h3>----Falta----</h3>
+          <p>Estrategias de respaldo incremental, diferencial y completo.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">2</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>pg_dump / pg_restore</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Plan de Recuperación</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u3_t11"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl3 ripple" data-key="u3_t11"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u3" data-key="u3_t12" data-unit="3" data-title="Replicación de Datos" data-desc="Configuración de replicación maestro-esclavo y alta disponibilidad con Streaming.">
+          <div class="wc-bar wc-bar3"></div>
+          <div class="wc-top"><span class="wc-num wn3">T12</span><span class="wc-week ww3">Semana 12</span></div>
+          <h3>Replicación de Datos</h3>
+          <p>Replicación maestro-esclavo y alta disponibilidad con Streaming.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">3</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Streaming Replication</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Failover Automático</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Load Balancing</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u3_t12"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl3 ripple" data-key="u3_t12"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ▸ UNIDAD IV ◂ -->
+  <section class="view" id="view-u4">
+    <div class="unit-page">
+      <div class="unit-page-hero uph-4">
+        <div class="uph-content">
+          <div class="uph-label">Base de Datos II</div>
+          <h1><span class="uph-num uph-n4">04</span> Optimización</h1>
+          <p>NoSQL · Data Warehouse · Minería de Datos · Proyecto Final</p>
+        </div>
+        <div class="unit-pill-nav">
+          <button class="upn" data-view="u1">I</button>
+          <button class="upn" data-view="u2">II</button>
+          <button class="upn" data-view="u3">III</button>
+          <button class="upn active" data-view="u4">IV</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="grid-u4">
+        <article class="wcard wc-u4" data-key="u4_t13" data-unit="4" data-title="Bases de Datos NoSQL" data-desc="MongoDB, Redis y Cassandra para casos de uso de alto rendimiento y escalabilidad.">
+          <div class="wc-bar wc-bar4"></div>
+          <div class="wc-top"><span class="wc-num wn4">T13</span><span class="wc-week ww4">Semana 13</span></div>
+          <h3>----Falta----</h3>
+          <p>MongoDB, Redis y Cassandra para alto rendimiento y escalabilidad.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">4</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>CRUD en MongoDB</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Caché con Redis</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Modelo de Columnas</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Comparativa SQL vs NoSQL</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u4_t13"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl4 ripple" data-key="u4_t13"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u4" data-key="u4_t14" data-unit="4" data-title="Data Warehouse" data-desc="Almacén de datos con esquema estrella y cubos OLAP para análisis empresarial.">
+          <div class="wc-bar wc-bar4"></div>
+          <div class="wc-top"><span class="wc-num wn4">T14</span><span class="wc-week ww4">Semana 14</span></div>
+          <h3>----Falta----</h3>
+          <p>Almacén de datos con esquema estrella y cubos OLAP para análisis.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">3</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Esquema Estrella</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>ETL con Python</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Análisis OLAP</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u4_t14"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl4 ripple" data-key="u4_t14"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u4" data-key="u4_t15" data-unit="4" data-title="Minería de Datos" data-desc="Algoritmos de clasificación y clustering sobre conjuntos de datos académicos.">
+          <div class="wc-bar wc-bar4"></div>
+          <div class="wc-top"><span class="wc-num wn4">T15</span><span class="wc-week ww4">Semana 15</span></div>
+          <h3>Minería de Datos</h3>
+          <p>Algoritmos de clasificación y clustering sobre datos académicos.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">2</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>K-Means Clustering</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Árbol de Decisión</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u4_t15"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl4 ripple" data-key="u4_t15"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+        <article class="wcard wc-u4" data-key="u4_t16" data-unit="4" data-title="Sistema Integral de Gestión" data-desc="Proyecto integrador que combina todas las competencias del curso en una solución empresarial.">
+          <div class="wc-bar wc-bar4"></div>
+          <div class="wc-top"><span class="wc-num wn4">T16</span><span class="wc-week ww4 ww-final">Proyecto Final</span></div>
+          <h3>----Falta----</h3>
+          <p>Proyecto integrador que combina todas las competencias del curso.</p>
+          <div class="wc-acts">
+            <button class="acts-btn"><i class="fa-solid fa-list-check"></i>Actividades<span class="acts-count">5</span><i class="fa-solid fa-chevron-down acts-chv"></i></button>
+            <div class="acts-drop">
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Diseño de Arquitectura</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Implementación de BD</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Seguridad y Roles</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Optimización de Queries</div>
+              <div class="act-item"><i class="fa-solid fa-circle-dot"></i>Documentación Técnica</div>
+            </div>
+          </div>
+          <div class="wc-footer">
+            <button class="btn-preview ripple" data-key="u4_t16"><i class="fa-solid fa-eye"></i> Vista Previa</button>
+            <button class="btn-download btn-dl4 ripple" data-key="u4_t16"><i class="fa-solid fa-download"></i> Descargar</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ▸ LOGIN / ADMIN ◂ -->
+  <section class="view" id="view-login">
+
+    <!-- LOGIN -->
+    <div id="loginScreen" class="login-screen">
+      <div class="ls-deco">
+        <div class="ls-deco-orb ld1"></div>
+        <div class="ls-deco-orb ld2"></div>
+        <div class="ls-text">
+          <div class="ls-logo"><span class="logo-chip">RD</span><span style="font-family:'Syne',sans-serif;font-weight:800">Rosales Crispin span class="logo-dot">.</span></span></div>
+          <h2>Panel<br><span class="gt1">Administrativo</span></h2>
+          <p>Gestiona tu portafolio académico con acceso seguro y sube documentos PDF a Carpeta 1.</p>
+          <ul class="ls-features">
+            <li><i class="fa-solid fa-circle-check"></i> Subir PDFs por unidad y semana</li>
+            <li><i class="fa-solid fa-circle-check"></i> Visualización inmediata en el portafolio</li>
+            <li><i class="fa-solid fa-circle-check"></i> Descarga directa por los visitantes</li>
+            <li><i class="fa-solid fa-circle-check"></i> Gestión completa de Carpeta 1</li>
+          </ul>
+          <div class="ls-cred-hint"><i class="fa-solid fa-circle-info"></i> admin@gmail.com · 123456</div>
+        </div>
+      </div>
+      <div class="ls-form-wrap">
+        <div class="ls-card">
+          <div class="ls-card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Iniciar Sesión</h3>
+          <p class="ls-card-sub">Credenciales de administrador</p>
+          <form id="loginForm" novalidate autocomplete="off">
+            <div class="lf-group" id="fg-email">
+              <label>Correo electrónico</label>
+              <div class="lf-input-wrap">
+                <i class="fa-solid fa-envelope lf-icon"></i>
+                <input type="email" id="loginEmail" placeholder="admin@gmail.com" spellcheck="false">
+                <span class="lf-check" id="emailCheck"></span>
+              </div>
+              <span class="lf-err" id="errEmail"></span>
+            </div>
+            <div class="lf-group" id="fg-pass">
+              <label>Contraseña</label>
+              <div class="lf-input-wrap">
+                <i class="fa-solid fa-key lf-icon"></i>
+                <input type="password" id="loginPass" placeholder="••••••••">
+                <button type="button" class="lf-eye" id="eyeBtn"><i class="fa-solid fa-eye" id="eyeIco"></i></button>
+              </div>
+              <span class="lf-err" id="errPass"></span>
+            </div>
+            <div class="lf-remember">
+              <label class="lf-check-label"><input type="checkbox" id="rememberMe"> Recordar sesión</label>
+              <a href="#" class="lf-forgot">¿Olvidaste la contraseña?</a>
+            </div>
+            <button type="submit" class="lf-submit ripple" id="loginSubmit">
+              <span id="loginBtnText">Entrar al Panel</span>
+              <i class="fa-solid fa-arrow-right-to-bracket" id="loginBtnIcon"></i>
+            </button>
+            <div class="lf-feedback" id="loginFeedback"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="adminScreen" class="admin-screen" style="display:none">
+      <!-- SIDEBAR -->
+      <aside class="adm-sidebar">
+        <div class="adm-sb-brand">
+          <span class="logo-chip sm">RD</span>
+          <div><p class="adm-brand-name">Admin Panel</p><p class="adm-brand-sub">BD II · UPLA</p></div>
+        </div>
+        <nav class="adm-nav">
+          <button class="adm-nav-btn active" data-panel="upload">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Subir PDF</span>
+          </button>
+          <button class="adm-nav-btn" data-panel="files">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>Carpeta 1</span>
+            <span class="adm-count" id="sidebarCount">0</span>
+          </button>
+          <button class="adm-nav-btn" data-panel="overview">
+            <i class="fa-solid fa-chart-bar"></i>
+            <span>Resumen</span>
+          </button>
+        </nav>
+        <div class="adm-sb-user">
+          <div class="adm-user-info">
+            <div class="adm-avatar">A</div>
+            <div>
+              <p class="adm-uname">Administrador</p>
+              <p class="adm-uemail">admin@gmail.com</p>
+            </div>
+          </div>
+          <button class="adm-logout-btn ripple" id="adminLogout" title="Cerrar sesión">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </aside>
+
+      <!-- PANELS -->
+      <div class="adm-body">
+
+        <!-- PANEL UPLOAD -->
+        <div class="adm-panel active" id="panel-upload">
+          <div class="ap-header">
+            <div>
+              <h2><i class="fa-solid fa-cloud-arrow-up"></i> Subir Documento PDF</h2>
+              <p>Sigue los pasos: elige unidad → semana → archivo → guarda</p>
+            </div>
+            <div class="ap-breadcrumb" id="apBreadcrumb">
+              <span class="apb-item active" data-step="1">Unidad</span>
+              <i class="fa-solid fa-chevron-right apb-sep"></i>
+              <span class="apb-item" data-step="2">Semana</span>
+              <i class="fa-solid fa-chevron-right apb-sep"></i>
+              <span class="apb-item" data-step="3">Archivo</span>
+              <i class="fa-solid fa-chevron-right apb-sep"></i>
+              <span class="apb-item" data-step="4">Confirmar</span>
+            </div>
+          </div>
+
+          <!-- STEP 1: UNIT -->
+          <div class="upload-step" id="step-unit">
+            <p class="step-label"><span class="sl-num">1</span> Selecciona la Unidad</p>
+            <div class="unit-grid">
+              <button class="ug-card ripple" data-unit="1">
+                <div class="ug-number">01</div>
+                <div class="ug-info"><strong>Fundamentos</strong><small>Semanas 1 – 4</small></div>
+                <div class="ug-pdf-bar" id="upb-1"></div>
+              </button>
+              <button class="ug-card ug-c2 ripple" data-unit="2">
+                <div class="ug-number ug-n2">02</div>
+                <div class="ug-info"><strong>Diseño Avanzado</strong><small>Semanas 5 – 8</small></div>
+                <div class="ug-pdf-bar" id="upb-2"></div>
+              </button>
+              <button class="ug-card ug-c3 ripple" data-unit="3">
+                <div class="ug-number ug-n3">03</div>
+                <div class="ug-info"><strong>Implementación</strong><small>Semanas 9 – 12</small></div>
+                <div class="ug-pdf-bar" id="upb-3"></div>
+              </button>
+              <button class="ug-card ug-c4 ripple" data-unit="4">
+                <div class="ug-number ug-n4">04</div>
+                <div class="ug-info"><strong>Optimización</strong><small>Semanas 13 – 16</small></div>
+                <div class="ug-pdf-bar" id="upb-4"></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: WEEK -->
+          <div class="upload-step hidden" id="step-week">
+            <div class="step-header-row">
+              <p class="step-label"><span class="sl-num">2</span> Selecciona la Semana / Trabajo</p>
+              <button class="step-back" id="backUnit"><i class="fa-solid fa-arrow-left"></i> Cambiar unidad</button>
+            </div>
+            <div class="week-grid" id="weekGrid"></div>
+          </div>
+
+          <!-- STEP 3: FILE -->
+          <div class="upload-step hidden" id="step-file">
+            <div class="step-header-row">
+              <p class="step-label"><span class="sl-num">3</span> Sube el archivo PDF</p>
+              <button class="step-back" id="backWeek"><i class="fa-solid fa-arrow-left"></i> Cambiar semana</button>
+            </div>
+            <div class="selected-info" id="selectedInfo"></div>
+            <label class="drop-area" id="dropArea">
+              <input type="file" id="fileInput" accept=".pdf" hidden>
+              <div class="da-content" id="daContent">
+                <div class="da-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
+                <p class="da-title">Arrastra tu PDF aquí</p>
+                <p class="da-sub">o <span class="da-link">haz clic para explorar</span></p>
+                <p class="da-hint">Solo archivos .pdf · Máx. recomendado 10 MB</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- STEP 4: CONFIRM -->
+          <div class="upload-step hidden" id="step-confirm">
+            <div class="step-header-row">
+              <p class="step-label"><span class="sl-num">4</span> Confirmar y Guardar</p>
+              <button class="step-back" id="backFile"><i class="fa-solid fa-arrow-left"></i> Cambiar archivo</button>
+            </div>
+            <div class="confirm-box" id="confirmBox"></div>
+            <div class="confirm-btns">
+              <button class="cb-cancel" id="cancelUpload"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+              <button class="cb-save ripple" id="btnSave"><i class="fa-solid fa-floppy-disk"></i> Guardar en Carpeta 1</button>
+            </div>
+            <div class="upload-toast" id="uploadToast"></div>
+          </div>
+        </div>
+
+        <!-- PANEL FILES -->
+        <div class="adm-panel" id="panel-files">
+          <div class="ap-header">
+            <div>
+              <h2><i class="fa-solid fa-folder-open"></i> Carpeta 1</h2>
+              <p>Documentos PDF guardados en tu portafolio</p>
+            </div>
+            <div class="ap-files-count" id="filesCount">0 archivos</div>
+          </div>
+          <div class="files-list" id="filesList"></div>
+        </div>
+
+        <!-- PANEL OVERVIEW -->
+        <div class="adm-panel" id="panel-overview">
+          <div class="ap-header">
+            <div>
+              <h2><i class="fa-solid fa-chart-bar"></i> Resumen</h2>
+              <p>Estado de los documentos por unidad y semana</p>
+            </div>
+          </div>
+          <div class="overview-wrap" id="overviewWrap"></div>
+        </div>
+
+      </div><!-- end adm-body -->
+    </div><!-- end admin-screen -->
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="siteFooter">
+  <div class="sf-wrap">
+    <div class="sf-brand">
+      <span class="logo-chip sm">RD</span>
+      <span>Rosales Crispin Aristoteles Onassis</span>
+    </div>
+    <div class="sf-center">
+      <span><i class="fa-solid fa-university"></i> UPLA · Ing. Sistemas y Computacion</span>
+      <span class="sf-dot">·</span>
+      <span><i class="fa-solid fa-book-open"></i> Base de Datos II</span>
+      <span class="sf-dot">·</span>
+      <span id="footerYear"></span>
+    </div>
+    <div class="sf-social">
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- PDF MODAL -->
+<div class="pdf-modal" id="pdfModal" role="dialog" aria-modal="true">
+  <div class="pm-box">
+    <button class="pm-close ripple" id="pmClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <div class="pm-inner" id="pmInner"></div>
+  </div>
+</div>
+
+<!-- TOAST GLOBAL -->
+<div class="global-toast" id="globalToast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
