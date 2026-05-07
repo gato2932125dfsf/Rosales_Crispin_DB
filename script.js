@@ -834,7 +834,7 @@
         uploaded: 'Precargado', isStatic: true
       }
     ],
-     u1_t05: [
+     u2_t05: [
       {
         name: 'Semana 5 Desarollo Resumen.pdf.pdf',
         data: 'carpeta1/Sem5_Desarollo Resumen.pdf',
