@@ -834,6 +834,14 @@
         uploaded: 'Precargado', isStatic: true
       }
     ],
+     u1_t05: [
+      {
+        name: 'Semana 5 Desarollo Resumen.pdf.pdf',
+        data: 'carpeta1/Sem5_Desarollo Resumen.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+    ],
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
