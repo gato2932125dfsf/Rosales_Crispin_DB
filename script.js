@@ -781,7 +781,8 @@
     u1_t01: [
       {
         name: 'Semana1 Informe tecnico comparativo de Arquitecturas.pdf',
-        data: 'carpeta1/Semana1_Informe tecnico comparativo de Arquitecturas.pdf',
+        data: 'carpeta1/Sem1_Informe tecnico comparativo de Arquitecturas.pdf',
+         
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
@@ -795,7 +796,7 @@
       },
       {
         name: 'Semana2 Desarrollo Modelado Entidad Relacion BD II.pdf',
-        data: 'carpeta1/Semana2_Desarrollo Modelado Entidad Relacion BD II .pdf',
+        data: 'carpeta1/Sem2_Desarrollo Modelado Entidad Relacion BD II .pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
