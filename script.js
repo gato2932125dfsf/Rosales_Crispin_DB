@@ -782,7 +782,6 @@
       {
         name: 'Semana1 Informe tecnico comparativo de Arquitecturas.pdf',
         data: 'carpeta1/Sem1_Informe tecnico comparativo de Arquitecturas.pdf',
-         
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
