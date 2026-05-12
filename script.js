@@ -836,11 +836,23 @@
     ],
      u2_t05: [
       {
-        name: 'Semana 5 Desarollo Resumen.pdf.pdf',
-        data: 'carpeta1/Sem5_Desarollo Resumen.pdf',
+        name: '   Semana 5 - Desarollo Normalizacion de inventario.pdf',
+        data: 'carpeta1/Sem5_Normalizacion inventario.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
-      }
+      },
+       {
+        name: 'Semana 5 - Ficha inventario Tecnologico',
+        data: 'carpeta1/Sem5_fichaInventarioEquipos.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: 'Semana 5 - Resumen de clases',
+        data: 'carpeta1/Sem5_Desarrollo Resumen.png',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }   
     ],
   };
   
