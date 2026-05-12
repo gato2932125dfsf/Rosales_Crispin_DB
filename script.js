@@ -842,13 +842,13 @@
         uploaded: 'Precargado', isStatic: true
       },
        {
-        name: 'Semana 5 - Ficha inventario Tecnologico',
+        name: 'Semana 5 - Ficha inventario Tecnologico.pdf',
         data: 'carpeta1/Sem5_fichaInventarioEquipos.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
         {
-        name: 'Semana 5 - Resumen de clases',
+        name: 'Semana 5 - Resumen de clases .png',
         data: 'carpeta1/Sem5_Desarrollo Resumen.png',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
