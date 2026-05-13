@@ -854,6 +854,15 @@
         uploaded: 'Precargado', isStatic: true
       }   
     ],
+     u2_t06: [
+      {
+        name: '   Semana 6 - Desarollo Resumen.png',
+        data: 'carpeta1/Sem6_Resumen.png',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+       
+    ],
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
