@@ -863,6 +863,15 @@
       }
        
     ],
+     u2_t07: [
+      {
+        name: '   Semana 7 - Desarollo Resumen.png',
+        data: 'carpeta1/Sem7_Resumen.png',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+       
+    ],
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
