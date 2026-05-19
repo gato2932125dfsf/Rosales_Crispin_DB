@@ -848,7 +848,7 @@
         uploaded: 'Precargado', isStatic: true
       },
         {
-        name: 'Semana 5 - Ficha inventario Tecnologico.pdf',
+        name: 'Semana 5 - Actividad Preguntas.pdf',
         data: 'carpeta1/Sem5_ActividadPreguntas.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
