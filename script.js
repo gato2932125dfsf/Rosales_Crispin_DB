@@ -836,8 +836,8 @@
     ],
      u2_t05: [
       {
-        name: '   Semana 5 - Desarollo Normalizacion de inventario.pdf',
-        data: 'carpeta1/Sem5_DesarrolloClases.pdf',
+        name: '   Semana 5 - Rectificacion Normalizacion.pdf',
+        data: 'carpeta1/Sem5_Rectificacion Normalizacion',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
@@ -854,16 +854,22 @@
         uploaded: 'Precargado', isStatic: true
       },
         {
-        name: 'Semana 5 - Resumen de clases .png',
-        data: 'carpeta1/Sem5_Desarrollo Resumen.png',
+        name: 'Semana 5 - Desarrollo Resume',
+        data: 'carpeta1/Sem5_Desarrollon Resum.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }   
     ],
      u2_t06: [
       {
-        name: '   Semana 6 - Desarollo Resumen.png',
-        data: 'carpeta1/Sem6_Resumen.png',
+        name: '   Semana 6 - Sem6_Desarrollo Resume',
+        data: 'carpeta1/Sem6_Desarrollon Resum.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 6 - Preguntas Recreativas.pdf',
+        data: 'carpeta1/Sem6_Preguntas Recreativas.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
@@ -871,8 +877,8 @@
     ],
      u2_t07: [
       {
-        name: '   Semana 7 - Desarollo Resumen.pdf',
-        data: 'carpeta1/Sem7_Resumen.pdf',
+        name: '   Semana 7 - Sem7_Desarrollo Resumen.pdf',
+        data: 'carpeta1/Sem7_Desarrollon Resum.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
