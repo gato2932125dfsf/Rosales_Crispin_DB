@@ -837,7 +837,7 @@
      u2_t05: [
       {
         name: '   Semana 5 - Rectificacion Normalizacion.pdf',
-        data: 'carpeta1/Sem5_Rectificacion Normalizacion',
+        data: 'carpeta1/Sem5_Rectificacion Normalizacion.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
@@ -862,7 +862,7 @@
     ],
      u2_t06: [
       {
-        name: '   Semana 6 - Sem6_Desarrollo Resume.pdf',
+        name: '   Semana 6 - Sem6_Desarrollo Resumen.pdf',
         data: 'carpeta1/Sem6_Desarrollon Resum.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
