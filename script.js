@@ -854,7 +854,7 @@
         uploaded: 'Precargado', isStatic: true
       },
         {
-        name: 'Semana 5 - Desarrollo Resume',
+        name: 'Semana 5 - Desarrollo Resume.pdf',
         data: 'carpeta1/Sem5_Desarrollon Resum.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
@@ -862,7 +862,7 @@
     ],
      u2_t06: [
       {
-        name: '   Semana 6 - Sem6_Desarrollo Resume',
+        name: '   Semana 6 - Sem6_Desarrollo Resume.pdf',
         data: 'carpeta1/Sem6_Desarrollon Resum.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
