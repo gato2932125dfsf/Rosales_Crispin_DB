@@ -836,8 +836,8 @@
     ],
      u2_t05: [
       {
-        name: '   Semana 5 - Rectificacion Normalizacion.pdf',
-        data: 'carpeta1/Sem5_Rectificacion Normalizacion.pdf',
+        name: '   Semana 5 - Sem5_NormalCoreccion.pdf',
+        data: 'carpeta1/Sem5_NormalCoreccion.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
@@ -873,6 +873,27 @@
       {
         name: '   Semana 7 - Sem7_Desarrollo Resumen.pdf',
         data: 'carpeta1/Sem7_Desarrollon Resum.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+       
+    ],
+     u2_t08: [
+      {
+        name: '   Semana 8 - Sem8_ActividadesDesarrollo.pdf',
+        data: 'carpeta1/Sem8_ActividadesDesarrollo.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 8 - Sem8_ResumenActividades.pdf',
+        data: 'carpeta1/Sem8_ResumenActividades.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 8 - Sem8_SQL SERVER Rosales.txt',
+        data: 'carpeta1/Sem8_SQL SERVER Rosales.txt',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
