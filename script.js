@@ -896,6 +896,12 @@
         data: 'carpeta1/Sem8_SQL SERVER Rosales.txt',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 8 - Sem8_ResumenCreativo.pdf',
+        data: 'carpeta1/Sem8_ResumenCreativo.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
       }
        
     ],
