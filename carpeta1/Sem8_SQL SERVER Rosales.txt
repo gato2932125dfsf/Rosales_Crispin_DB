@@ -1,0 +1,1379 @@
+-- 1. CREACIÓN DE LA BASE DE DATOS
+CREATE DATABASE GestionInventarioTecnologico;
+GO
+
+USE GestionInventarioTecnologico;
+GO
+
+-- ========================================================
+-- 2. CREACIÓN DE TABLAS INDEPENDIENTES (FUERTES / CATÁLOGOS)
+-- ========================================================
+
+CREATE TABLE Procesador (
+    Codigo_Procesador VARCHAR(50) NOT NULL,
+    Procesador_Velocidad VARCHAR(50),
+    CONSTRAINT PK_Procesador PRIMARY KEY (Codigo_Procesador)
+);
+
+CREATE TABLE Disco_Duro (
+    ID_DiscoDuro VARCHAR(50) NOT NULL,
+    DiscoDuro_Capacidad VARCHAR(50),
+    DiscoDuro_Marca VARCHAR(50),
+    CONSTRAINT PK_Disco_Duro PRIMARY KEY (ID_DiscoDuro)
+);
+
+CREATE TABLE GPU (
+    Codigo_GPU VARCHAR(50) NOT NULL,
+    GPU_Memoria VARCHAR(50),
+    CONSTRAINT PK_GPU PRIMARY KEY (Codigo_GPU)
+);
+
+CREATE TABLE Ficha_Inventario_Tecnologico (
+    Id_CodigoAlmacen VARCHAR(50) NOT NULL,
+    Dependencia VARCHAR(100),
+    Fecha DATE,
+    Cod_Tecnologia VARCHAR(50),
+    Usuario VARCHAR(100), -- Nota: Aparece duplicado en el diseño, se coloca una sola vez
+    CONSTRAINT PK_Ficha_Inventario PRIMARY KEY (Id_CodigoAlmacen)
+);
+
+CREATE TABLE Acceso_Remoto (
+    Codigo_Anidesk VARCHAR(50) NOT NULL,
+    contraseña VARCHAR(50),
+    CONSTRAINT PK_Acceso_Remoto PRIMARY KEY (Codigo_Anidesk)
+);
+
+CREATE TABLE General (
+    ID_General VARCHAR(50) NOT NULL,
+    Estado VARCHAR(50),
+    Observacion VARCHAR(MAX),
+    Firma VARCHAR(100),
+    CONSTRAINT PK_General PRIMARY KEY (ID_General)
+);
+
+CREATE TABLE Sistema_Operativo (
+    ID_Sistema_Operativo VARCHAR(50) NOT NULL,
+    Sistema_Operativo VARCHAR(100),
+    Sistema_licencia VARCHAR(50), -- Aquí puedes manejar si es Licenciado o Sin Licencia
+    CONSTRAINT PK_Sistema_Operativo PRIMARY KEY (ID_Sistema_Operativo)
+);
+
+CREATE TABLE Monitor (
+    N_Serie_Monitor VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50),
+    marca VARCHAR(50),
+    CONSTRAINT PK_Monitor PRIMARY KEY (N_Serie_Monitor)
+);
+
+CREATE TABLE Teclado (
+    N_Serie_Teclado VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50),
+    CONSTRAINT PK_Teclado PRIMARY KEY (N_Serie_Teclado)
+);
+
+CREATE TABLE Mouse (
+    N_Serie_Mouse VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50),
+    CONSTRAINT PK_Mouse PRIMARY KEY (N_Serie_Mouse)
+);
+
+CREATE TABLE Parlante (
+    N_Serie_Parlante VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50),
+    CONSTRAINT PK_Parlante PRIMARY KEY (N_Serie_Parlante)
+);
+go
+
+-- ========================================================
+-- 3. CREACIÓN DE TABLAS CON DEPENDENCIAS (LLAVES FORÁNEAS)
+-- ========================================================
+
+-- Tabla Harware (Depende de Procesador, Disco_Duro y GPU)
+CREATE TABLE Harware (
+    ID_Harware VARCHAR(50) NOT NULL,
+    Codigo_Procesador VARCHAR(50),
+    ID_DiscoDuro VARCHAR(50),
+    Codigo_GPU VARCHAR(50),
+    tipo VARCHAR(50),
+    Marca_y_Modelo VARCHAR(100),
+    N_Serie VARCHAR(50),
+    Ram VARCHAR(50),
+    Unidad_CD_DVDRW VARCHAR(50),
+    Regulador VARCHAR(50),
+    CONSTRAINT PK_Harware PRIMARY KEY (ID_Harware),
+    CONSTRAINT FK_Harware_Procesador FOREIGN KEY (Codigo_Procesador) 
+        REFERENCES Procesador(Codigo_Procesador),
+    CONSTRAINT FK_Harware_Disco FOREIGN KEY (ID_DiscoDuro) 
+        REFERENCES Disco_Duro(ID_DiscoDuro),
+    CONSTRAINT FK_Harware_GPU FOREIGN KEY (Codigo_GPU) 
+        REFERENCES GPU(Codigo_GPU)
+);
+
+-- Tabla Sofware (Depende de Sistema_Operativo)
+-- Nota: Corregido el diseño para que ID_Sofware sea PK única y el SO sea la FK relacional.
+CREATE TABLE Sofware (
+    ID_Sofware VARCHAR(50) NOT NULL,
+    ID_Sistema_Operativo VARCHAR(50), 
+    Ofimatica VARCHAR(100),
+    Antivirus VARCHAR(100),
+    Navegador VARCHAR(100),
+    Desarollo VARCHAR(100),
+    Diseño VARCHAR(100),
+    CONSTRAINT PK_Sofware PRIMARY KEY (ID_Sofware),
+    CONSTRAINT FK_Sofware_SO FOREIGN KEY (ID_Sistema_Operativo) 
+        REFERENCES Sistema_Operativo(ID_Sistema_Operativo)
+);
+
+-- Tabla Accesorio_partes (Depende de Monitor, Teclado, Mouse y Parlante)
+CREATE TABLE Accesorio_partes (
+    ID_Partes VARCHAR(50) NOT NULL,
+    N_Serie_Monitor VARCHAR(50),
+    N_Serie_Teclado VARCHAR(50),
+    N_Serie_Mouse VARCHAR(50),
+    N_Serie_Parlante VARCHAR(50),
+    CONSTRAINT PK_Accesorio_partes PRIMARY KEY (ID_Partes),
+    CONSTRAINT FK_Partes_Monitor FOREIGN KEY (N_Serie_Monitor) 
+        REFERENCES Monitor(N_Serie_Monitor),
+    CONSTRAINT FK_Partes_Teclado FOREIGN KEY (N_Serie_Teclado) 
+        REFERENCES Teclado(N_Serie_Teclado),
+    CONSTRAINT FK_Partes_Mouse FOREIGN KEY (N_Serie_Mouse) 
+        REFERENCES Mouse(N_Serie_Mouse),
+    CONSTRAINT FK_Partes_Parlante FOREIGN KEY (N_Serie_Parlante) 
+        REFERENCES Parlante(N_Serie_Parlante)
+);
+go
+
+-- ========================================================
+-- 4. TABLA CENTRAL: Equipo_Inventario
+-- ========================================================
+-- Esta tabla une los flujos principales del inventario tecnológico.
+
+CREATE TABLE Equipo_Inventario (
+    Id_Inventario VARCHAR(50) NOT NULL,
+    Id_CodigoAlmacen VARCHAR(50),
+    ID_Harware VARCHAR(50),
+    ID_Sofware VARCHAR(50),
+    ID_General VARCHAR(50),
+    ID_Partes VARCHAR(50),
+    Codigo_Anidesk VARCHAR(50),
+    CONSTRAINT PK_Equipo_Inventario PRIMARY KEY (Id_Inventario),
+    CONSTRAINT FK_Equipo_Ficha FOREIGN KEY (Id_CodigoAlmacen) 
+        REFERENCES Ficha_Inventario_Tecnologico(Id_CodigoAlmacen),
+    CONSTRAINT FK_Equipo_Harware FOREIGN KEY (ID_Harware) 
+        REFERENCES Harware(ID_Harware),
+    CONSTRAINT FK_Equipo_Sofware FOREIGN KEY (ID_Sofware) 
+        REFERENCES Sofware(ID_Sofware),
+    CONSTRAINT FK_Equipo_General FOREIGN KEY (ID_General) 
+        REFERENCES General(ID_General),
+    CONSTRAINT FK_Equipo_Partes FOREIGN KEY (ID_Partes) 
+        REFERENCES Accesorio_partes(ID_Partes),
+    CONSTRAINT FK_Equipo_Anidesk FOREIGN KEY (Codigo_Anidesk) 
+        REFERENCES Acceso_Remoto(Codigo_Anidesk)
+);
+GO
+
+USE GestionInventarioTecnologico;
+GO
+
+-- ========================================================
+-- 1. TABLAS INDEPENDIENTES (50 registros cada una)
+-- ========================================================
+
+-- Procesador
+INSERT INTO Procesador VALUES 
+('PROC001', 'Intel Core i7 3.6GHz'),
+('PROC002', 'Intel Core i5 2.9GHz'),
+('PROC003', 'Intel Core i3 2.4GHz'),
+('PROC004', 'AMD Ryzen 7 3.8GHz'),
+('PROC005', 'AMD Ryzen 5 3.6GHz'),
+('PROC006', 'Intel Pentium 2.2GHz'),
+('PROC007', 'Intel Core i7 4.2GHz'),
+('PROC008', 'AMD Ryzen 9 4.0GHz'),
+('PROC009', 'Intel Xeon 2.5GHz'),
+('PROC010', 'Intel Core i7 3.5GHz'),
+('PROC011', 'AMD Ryzen 7 3.7GHz'),
+('PROC012', 'Intel Core i5 2.8GHz'),
+('PROC013', 'Intel Core i3 2.3GHz'),
+('PROC014', 'AMD Ryzen 5 3.5GHz'),
+('PROC015', 'Intel Pentium 2.1GHz'),
+('PROC016', 'Intel Core i7 3.9GHz'),
+('PROC017', 'AMD Ryzen 9 3.9GHz'),
+('PROC018', 'Intel Xeon 2.6GHz'),
+('PROC019', 'Intel Core i5 2.7GHz'),
+('PROC020', 'Intel Core i3 2.2GHz'),
+('PROC021', 'AMD Ryzen 7 3.6GHz'),
+('PROC022', 'Intel Core i7 4.1GHz'),
+('PROC023', 'AMD Ryzen 5 3.4GHz'),
+('PROC024', 'Intel Pentium 2.3GHz'),
+('PROC025', 'Intel Core i5 3.0GHz'),
+('PROC026', 'AMD Ryzen 9 4.2GHz'),
+('PROC027', 'Intel Xeon 2.7GHz'),
+('PROC028', 'Intel Core i7 3.8GHz'),
+('PROC029', 'Intel Core i3 2.5GHz'),
+('PROC030', 'AMD Ryzen 7 3.8GHz'),
+('PROC031', 'Intel Core i5 2.6GHz'),
+('PROC032', 'AMD Ryzen 5 3.3GHz'),
+('PROC033', 'Intel Pentium 2.0GHz'),
+('PROC034', 'Intel Core i7 3.7GHz'),
+('PROC035', 'AMD Ryzen 9 4.1GHz'),
+('PROC036', 'Intel Xeon 2.8GHz'),
+('PROC037', 'Intel Core i5 2.5GHz'),
+('PROC038', 'Intel Core i3 2.1GHz'),
+('PROC039', 'AMD Ryzen 7 3.5GHz'),
+('PROC040', 'Intel Core i7 4.0GHz'),
+('PROC041', 'AMD Ryzen 5 3.2GHz'),
+('PROC042', 'Intel Pentium 2.4GHz'),
+('PROC043', 'Intel Core i5 3.1GHz'),
+('PROC044', 'AMD Ryzen 9 4.3GHz'),
+('PROC045', 'Intel Xeon 2.9GHz'),
+('PROC046', 'Intel Core i7 3.6GHz'),
+('PROC047', 'Intel Core i3 2.6GHz'),
+('PROC048', 'AMD Ryzen 7 3.4GHz'),
+('PROC049', 'Intel Core i5 2.4GHz'),
+('PROC050', 'AMD Ryzen 5 3.1GHz');
+GO
+
+-- Disco_Duro
+INSERT INTO Disco_Duro VALUES 
+('DD001', '256GB SSD', 'Kingston'),
+('DD002', '512GB SSD', 'Samsung'),
+('DD003', '1TB HDD', 'Seagate'),
+('DD004', '2TB HDD', 'Western Digital'),
+('DD005', '128GB SSD', 'Crucial'),
+('DD006', '256GB SSD', 'Intel'),
+('DD007', '512GB SSD', 'Toshiba'),
+('DD008', '1TB SSD', 'Samsung'),
+('DD009', '2TB HDD', 'Hitachi'),
+('DD010', '500GB HDD', 'Seagate'),
+('DD011', '256GB SSD', 'Sandisk'),
+('DD012', '512GB SSD', 'Micron'),
+('DD013', '1TB HDD', 'Western Digital'),
+('DD014', '2TB SSD', 'Kingston'),
+('DD015', '128GB SSD', 'Transcend'),
+('DD016', '256GB SSD', 'ADATA'),
+('DD017', '512GB SSD', 'Patriot'),
+('DD018', '1TB HDD', 'Toshiba'),
+('DD019', '2TB HDD', 'Seagate'),
+('DD020', '500GB SSD', 'Crucial'),
+('DD021', '256GB SSD', 'PNY'),
+('DD022', '512GB SSD', 'Samsung'),
+('DD023', '1TB SSD', 'Intel'),
+('DD024', '2TB HDD', 'Western Digital'),
+('DD025', '128GB SSD', 'Kingston'),
+('DD026', '256GB SSD', 'Sandisk'),
+('DD027', '512GB SSD', 'Toshiba'),
+('DD028', '1TB HDD', 'Hitachi'),
+('DD029', '2TB HDD', 'Seagate'),
+('DD030', '500GB HDD', 'Western Digital'),
+('DD031', '256GB SSD', 'Micron'),
+('DD032', '512GB SSD', 'ADATA'),
+('DD033', '1TB HDD', 'Crucial'),
+('DD034', '2TB SSD', 'Samsung'),
+('DD035', '128GB SSD', 'Transcend'),
+('DD036', '256GB SSD', 'Sandisk'),
+('DD037', '512GB SSD', 'Kingston'),
+('DD038', '1TB SSD', 'Intel'),
+('DD039', '2TB HDD', 'Toshiba'),
+('DD040', '500GB SSD', 'Patriot'),
+('DD041', '256GB SSD', 'PNY'),
+('DD042', '512GB SSD', 'Seagate'),
+('DD043', '1TB HDD', 'Western Digital'),
+('DD044', '2TB HDD', 'Hitachi'),
+('DD045', '128GB SSD', 'Crucial'),
+('DD046', '256GB SSD', 'ADATA'),
+('DD047', '512GB SSD', 'Micron'),
+('DD048', '1TB SSD', 'Samsung'),
+('DD049', '2TB HDD', 'Kingston'),
+('DD050', '500GB HDD', 'Toshiba');
+GO
+
+-- GPU
+INSERT INTO GPU VALUES 
+('GPU001', '2GB GDDR5'),
+('GPU002', '4GB GDDR6'),
+('GPU003', '6GB GDDR6'),
+('GPU004', '8GB GDDR6'),
+('GPU005', '2GB GDDR5'),
+('GPU006', '4GB GDDR5'),
+('GPU007', '8GB GDDR6'),
+('GPU008', '12GB GDDR6'),
+('GPU009', '2GB GDDR5'),
+('GPU010', '6GB GDDR6'),
+('GPU011', '4GB GDDR5'),
+('GPU012', '8GB GDDR6'),
+('GPU013', '2GB GDDR5'),
+('GPU014', '4GB GDDR6'),
+('GPU015', '6GB GDDR5'),
+('GPU016', '8GB GDDR6'),
+('GPU017', '2GB GDDR5'),
+('GPU018', '4GB GDDR5'),
+('GPU019', '6GB GDDR6'),
+('GPU020', '12GB GDDR6'),
+('GPU021', '2GB GDDR5'),
+('GPU022', '4GB GDDR6'),
+('GPU023', '8GB GDDR5'),
+('GPU024', '10GB GDDR6'),
+('GPU025', '2GB GDDR5'),
+('GPU026', '4GB GDDR5'),
+('GPU027', '6GB GDDR6'),
+('GPU028', '8GB GDDR5'),
+('GPU029', '2GB GDDR5'),
+('GPU030', '4GB GDDR6'),
+('GPU031', '6GB GDDR5'),
+('GPU032', '8GB GDDR6'),
+('GPU033', '2GB GDDR5'),
+('GPU034', '4GB GDDR5'),
+('GPU035', '6GB GDDR6'),
+('GPU036', '8GB GDDR5'),
+('GPU037', '2GB GDDR5'),
+('GPU038', '4GB GDDR6'),
+('GPU039', '6GB GDDR6'),
+('GPU040', '12GB GDDR6'),
+('GPU041', '2GB GDDR5'),
+('GPU042', '4GB GDDR5'),
+('GPU043', '8GB GDDR6'),
+('GPU044', '10GB GDDR5'),
+('GPU045', '2GB GDDR5'),
+('GPU046', '4GB GDDR6'),
+('GPU047', '6GB GDDR5'),
+('GPU048', '8GB GDDR6'),
+('GPU049', '2GB GDDR5'),
+('GPU050', '4GB GDDR5');
+GO
+
+-- Sistema_Operativo
+INSERT INTO Sistema_Operativo VALUES 
+('SO001', 'win10', 'Si'),
+('SO002', 'win8.1', 'Si'),
+('SO003', 'win8', 'No'),
+('SO004', 'win7', 'Si'),
+('SO005', 'win xp', 'No'),
+('SO006', 'win server', 'Si'),
+('SO007', 'linux', 'Si'),
+('SO008', 'MacOs', 'Si'),
+('SO009', 'win10', 'Si'),
+('SO010', 'win8.1', 'Si'),
+('SO011', 'win8', 'No'),
+('SO012', 'win7', 'Si'),
+('SO013', 'win xp', 'No'),
+('SO014', 'win server', 'Si'),
+('SO015', 'linux', 'Si'),
+('SO016', 'MacOs', 'Si'),
+('SO017', 'win10', 'Si'),
+('SO018', 'win8.1', 'No'),
+('SO019', 'win8', 'Si'),
+('SO020', 'win7', 'Si'),
+('SO021', 'win xp', 'No'),
+('SO022', 'win server', 'Si'),
+('SO023', 'linux', 'Si'),
+('SO024', 'MacOs', 'Si'),
+('SO025', 'win10', 'Si'),
+('SO026', 'win8.1', 'Si'),
+('SO027', 'win8', 'No'),
+('SO028', 'win7', 'No'),
+('SO029', 'win xp', 'No'),
+('SO030', 'win server', 'Si'),
+('SO031', 'linux', 'Si'),
+('SO032', 'MacOs', 'Si'),
+('SO033', 'win10', 'Si'),
+('SO034', 'win8.1', 'Si'),
+('SO035', 'win8', 'Si'),
+('SO036', 'win7', 'Si'),
+('SO037', 'win xp', 'No'),
+('SO038', 'win server', 'Si'),
+('SO039', 'linux', 'Si'),
+('SO040', 'MacOs', 'Si'),
+('SO041', 'win10', 'Si'),
+('SO042', 'win8.1', 'No'),
+('SO043', 'win8', 'Si'),
+('SO044', 'win7', 'No'),
+('SO045', 'win xp', 'No'),
+('SO046', 'win server', 'Si'),
+('SO047', 'linux', 'Si'),
+('SO048', 'MacOs', 'Si'),
+('SO049', 'win10', 'Si'),
+('SO050', 'win8.1', 'Si');
+GO
+
+-- Monitor
+INSERT INTO Monitor VALUES 
+('MON001', '24 pulgadas Full HD', 'LG'),
+('MON002', '27 pulgadas 4K', 'Dell'),
+('MON003', '22 pulgadas Full HD', 'HP'),
+('MON004', '21.5 pulgadas HD', 'Asus'),
+('MON005', '24 pulgadas Full HD', 'Samsung'),
+('MON006', '23.8 pulgadas Full HD', 'BenQ'),
+('MON007', '27 pulgadas QHD', 'LG'),
+('MON008', '24 pulgadas IPS', 'Acer'),
+('MON009', '20 pulgadas HD', 'ViewSonic'),
+('MON010', '25 pulgadas Full HD', 'Dell'),
+('MON011', '24 pulgadas Full HD', 'Asus'),
+('MON012', '26 pulgadas Full HD', 'HP'),
+('MON013', '23 pulgadas Full HD', 'LG'),
+('MON014', '27 pulgadas 4K', 'Samsung'),
+('MON015', '21 pulgadas HD', 'Acer'),
+('MON016', '24 pulgadas Full HD', 'BenQ'),
+('MON017', '27 pulgadas QHD', 'Dell'),
+('MON018', '22 pulgadas Full HD', 'Asus'),
+('MON019', '25 pulgadas Full HD', 'LG'),
+('MON020', '24 pulgadas 4K', 'ViewSonic'),
+('MON021', '23 pulgadas Full HD', 'HP'),
+('MON022', '27 pulgadas Full HD', 'Samsung'),
+('MON023', '20 pulgadas HD', 'BenQ'),
+('MON024', '24 pulgadas Full HD', 'Acer'),
+('MON025', '26 pulgadas Full HD', 'Dell'),
+('MON026', '24 pulgadas Full HD', 'LG'),
+('MON027', '27 pulgadas 4K', 'Asus'),
+('MON028', '22 pulgadas Full HD', 'ViewSonic'),
+('MON029', '25 pulgadas Full HD', 'HP'),
+('MON030', '21.5 pulgadas HD', 'Samsung'),
+('MON031', '24 pulgadas Full HD', 'BenQ'),
+('MON032', '27 pulgadas QHD', 'Acer'),
+('MON033', '23 pulgadas Full HD', 'Dell'),
+('MON034', '26 pulgadas Full HD', 'LG'),
+('MON035', '24 pulgadas 4K', 'Asus'),
+('MON036', '20 pulgadas HD', 'HP'),
+('MON037', '25 pulgadas Full HD', 'ViewSonic'),
+('MON038', '22 pulgadas Full HD', 'Samsung'),
+('MON039', '27 pulgadas Full HD', 'BenQ'),
+('MON040', '21 pulgadas HD', 'Acer'),
+('MON041', '24 pulgadas Full HD', 'Dell'),
+('MON042', '27 pulgadas 4K', 'LG'),
+('MON043', '23 pulgadas Full HD', 'Asus'),
+('MON044', '26 pulgadas Full HD', 'HP'),
+('MON045', '24 pulgadas Full HD', 'ViewSonic'),
+('MON046', '25 pulgadas Full HD', 'Samsung'),
+('MON047', '22 pulgadas Full HD', 'BenQ'),
+('MON048', '27 pulgadas QHD', 'Acer'),
+('MON049', '20 pulgadas HD', 'Dell'),
+('MON050', '24 pulgadas Full HD', 'LG');
+GO
+
+-- Teclado
+INSERT INTO Teclado VALUES 
+('TEC001', 'Teclado Genius'),
+('TEC002', 'Teclado Logitech K120'),
+('TEC003', 'Teclado HP'),
+('TEC004', 'Teclado Dell'),
+('TEC005', 'Teclado Microsoft'),
+('TEC006', 'Teclado Redragon'),
+('TEC007', 'Teclado Corsair'),
+('TEC008', 'Teclado Razer'),
+('TEC009', 'Teclado básico'),
+('TEC010', 'Teclado inalámbrico'),
+('TEC011', 'Teclado Genius'),
+('TEC012', 'Teclado Logitech K120'),
+('TEC013', 'Teclado HP'),
+('TEC014', 'Teclado Dell'),
+('TEC015', 'Teclado Microsoft'),
+('TEC016', 'Teclado Redragon'),
+('TEC017', 'Teclado Corsair'),
+('TEC018', 'Teclado Razer'),
+('TEC019', 'Teclado básico'),
+('TEC020', 'Teclado inalámbrico'),
+('TEC021', 'Teclado Genius'),
+('TEC022', 'Teclado Logitech K120'),
+('TEC023', 'Teclado HP'),
+('TEC024', 'Teclado Dell'),
+('TEC025', 'Teclado Microsoft'),
+('TEC026', 'Teclado Redragon'),
+('TEC027', 'Teclado Corsair'),
+('TEC028', 'Teclado Razer'),
+('TEC029', 'Teclado básico'),
+('TEC030', 'Teclado inalámbrico'),
+('TEC031', 'Teclado Genius'),
+('TEC032', 'Teclado Logitech K120'),
+('TEC033', 'Teclado HP'),
+('TEC034', 'Teclado Dell'),
+('TEC035', 'Teclado Microsoft'),
+('TEC036', 'Teclado Redragon'),
+('TEC037', 'Teclado Corsair'),
+('TEC038', 'Teclado Razer'),
+('TEC039', 'Teclado básico'),
+('TEC040', 'Teclado inalámbrico'),
+('TEC041', 'Teclado Genius'),
+('TEC042', 'Teclado Logitech K120'),
+('TEC043', 'Teclado HP'),
+('TEC044', 'Teclado Dell'),
+('TEC045', 'Teclado Microsoft'),
+('TEC046', 'Teclado Redragon'),
+('TEC047', 'Teclado Corsair'),
+('TEC048', 'Teclado Razer'),
+('TEC049', 'Teclado básico'),
+('TEC050', 'Teclado inalámbrico');
+GO
+
+-- Mouse
+INSERT INTO Mouse VALUES 
+('MOU001', 'Mouse Genius'),
+('MOU002', 'Mouse Logitech M100'),
+('MOU003', 'Mouse HP'),
+('MOU004', 'Mouse Dell'),
+('MOU005', 'Mouse Microsoft'),
+('MOU006', 'Mouse Redragon'),
+('MOU007', 'Mouse Corsair'),
+('MOU008', 'Mouse Razer'),
+('MOU009', 'Mouse básico'),
+('MOU010', 'Mouse inalámbrico'),
+('MOU011', 'Mouse Genius'),
+('MOU012', 'Mouse Logitech M100'),
+('MOU013', 'Mouse HP'),
+('MOU014', 'Mouse Dell'),
+('MOU015', 'Mouse Microsoft'),
+('MOU016', 'Mouse Redragon'),
+('MOU017', 'Mouse Corsair'),
+('MOU018', 'Mouse Razer'),
+('MOU019', 'Mouse básico'),
+('MOU020', 'Mouse inalámbrico'),
+('MOU021', 'Mouse Genius'),
+('MOU022', 'Mouse Logitech M100'),
+('MOU023', 'Mouse HP'),
+('MOU024', 'Mouse Dell'),
+('MOU025', 'Mouse Microsoft'),
+('MOU026', 'Mouse Redragon'),
+('MOU027', 'Mouse Corsair'),
+('MOU028', 'Mouse Razer'),
+('MOU029', 'Mouse básico'),
+('MOU030', 'Mouse inalámbrico'),
+('MOU031', 'Mouse Genius'),
+('MOU032', 'Mouse Logitech M100'),
+('MOU033', 'Mouse HP'),
+('MOU034', 'Mouse Dell'),
+('MOU035', 'Mouse Microsoft'),
+('MOU036', 'Mouse Redragon'),
+('MOU037', 'Mouse Corsair'),
+('MOU038', 'Mouse Razer'),
+('MOU039', 'Mouse básico'),
+('MOU040', 'Mouse inalámbrico'),
+('MOU041', 'Mouse Genius'),
+('MOU042', 'Mouse Logitech M100'),
+('MOU043', 'Mouse HP'),
+('MOU044', 'Mouse Dell'),
+('MOU045', 'Mouse Microsoft'),
+('MOU046', 'Mouse Redragon'),
+('MOU047', 'Mouse Corsair'),
+('MOU048', 'Mouse Razer'),
+('MOU049', 'Mouse básico'),
+('MOU050', 'Mouse inalámbrico');
+GO
+
+-- Parlante
+INSERT INTO Parlante VALUES 
+('PAR001', 'Parlante Genius'),
+('PAR002', 'Parlante Logitech'),
+('PAR003', 'Parlante HP'),
+('PAR004', 'Parlante Dell'),
+('PAR005', 'Parlante básico'),
+('PAR006', 'Parlante Genius'),
+('PAR007', 'Parlante Logitech'),
+('PAR008', 'Parlante HP'),
+('PAR009', 'Parlante Dell'),
+('PAR010', 'Parlante básico'),
+('PAR011', 'Parlante Genius'),
+('PAR012', 'Parlante Logitech'),
+('PAR013', 'Parlante HP'),
+('PAR014', 'Parlante Dell'),
+('PAR015', 'Parlante básico'),
+('PAR016', 'Parlante Genius'),
+('PAR017', 'Parlante Logitech'),
+('PAR018', 'Parlante HP'),
+('PAR019', 'Parlante Dell'),
+('PAR020', 'Parlante básico'),
+('PAR021', 'Parlante Genius'),
+('PAR022', 'Parlante Logitech'),
+('PAR023', 'Parlante HP'),
+('PAR024', 'Parlante Dell'),
+('PAR025', 'Parlante básico'),
+('PAR026', 'Parlante Genius'),
+('PAR027', 'Parlante Logitech'),
+('PAR028', 'Parlante HP'),
+('PAR029', 'Parlante Dell'),
+('PAR030', 'Parlante básico'),
+('PAR031', 'Parlante Genius'),
+('PAR032', 'Parlante Logitech'),
+('PAR033', 'Parlante HP'),
+('PAR034', 'Parlante Dell'),
+('PAR035', 'Parlante básico'),
+('PAR036', 'Parlante Genius'),
+('PAR037', 'Parlante Logitech'),
+('PAR038', 'Parlante HP'),
+('PAR039', 'Parlante Dell'),
+('PAR040', 'Parlante básico'),
+('PAR041', 'Parlante Genius'),
+('PAR042', 'Parlante Logitech'),
+('PAR043', 'Parlante HP'),
+('PAR044', 'Parlante Dell'),
+('PAR045', 'Parlante básico'),
+('PAR046', 'Parlante Genius'),
+('PAR047', 'Parlante Logitech'),
+('PAR048', 'Parlante HP'),
+('PAR049', 'Parlante Dell'),
+('PAR050', 'Parlante básico');
+GO
+
+-- Acceso_Remoto (código 4 dígitos, contraseña 5 dígitos)
+INSERT INTO Acceso_Remoto VALUES 
+('1001', '12345'),
+('1002', '54321'),
+('1003', '11111'),
+('1004', '22222'),
+('1005', '33333'),
+('1006', '44444'),
+('1007', '55555'),
+('1008', '66666'),
+('1009', '77777'),
+('1010', '88888'),
+('1011', '99999'),
+('1012', '11223'),
+('1013', '44556'),
+('1014', '77889'),
+('1015', '99001'),
+('1016', '23456'),
+('1017', '34567'),
+('1018', '45678'),
+('1019', '56789'),
+('1020', '67890'),
+('1021', '78901'),
+('1022', '89012'),
+('1023', '90123'),
+('1024', '01234'),
+('1025', '12321'),
+('1026', '13579'),
+('1027', '24680'),
+('1028', '98765'),
+('1029', '54321'),
+('1030', '11122'),
+('1031', '33445'),
+('1032', '55667'),
+('1033', '77889'),
+('1034', '99000'),
+('1035', '12309'),
+('1036', '45609'),
+('1037', '78909'),
+('1038', '89009'),
+('1039', '90109'),
+('1040', '01209'),
+('1041', '19283'),
+('1042', '47563'),
+('1043', '58472'),
+('1044', '93847'),
+('1045', '10293'),
+('1046', '57684'),
+('1047', '38475'),
+('1048', '29384'),
+('1049', '74839'),
+('1050', '38475');
+GO
+
+-- General (Estado, Observación libre, Firma='si')
+INSERT INTO General VALUES 
+('GEN001', 'bueno', 'Equipo en excelente estado', 'si'),
+('GEN002', 'regular', 'Requiere limpieza de polvo', 'si'),
+('GEN003', 'malo', 'Disco duro fallando', 'si'),
+('GEN004', 'medio', 'Batería baja', 'si'),
+('GEN005', 'bueno', NULL, 'si'),
+('GEN006', 'regular', 'Teclado con teclas duras', 'si'),
+('GEN007', 'medio', 'Ventilador ruidoso', 'si'),
+('GEN008', 'bueno', 'Recién mantenido', 'si'),
+('GEN009', 'malo', 'Pantalla rota', 'si'),
+('GEN010', 'regular', 'Mouse doble clic', 'si'),
+('GEN011', 'bueno', NULL, 'si'),
+('GEN012', 'medio', 'Puertos USB dañados', 'si'),
+('GEN013', 'bueno', 'Equipo nuevo', 'si'),
+('GEN014', 'regular', 'Sobrecalentamiento', 'si'),
+('GEN015', 'malo', 'No enciende', 'si'),
+('GEN016', 'bueno', 'Con garantía', 'si'),
+('GEN017', 'regular', 'Ruido en disco', 'si'),
+('GEN018', 'medio', 'Actualización pendiente', 'si'),
+('GEN019', 'bueno', NULL, 'si'),
+('GEN020', 'regular', 'Problemas de red', 'si'),
+('GEN021', 'medio', 'Falla en GPU', 'si'),
+('GEN022', 'bueno', 'Certificado', 'si'),
+('GEN023', 'malo', 'Motherboard dañada', 'si'),
+('GEN024', 'regular', 'Fuente de poder débil', 'si'),
+('GEN025', 'bueno', 'Óptimo rendimiento', 'si'),
+('GEN026', 'medio', 'RAM insuficiente', 'si'),
+('GEN027', 'bueno', 'Sin observaciones', 'si'),
+('GEN028', 'regular', 'Teclado derramado', 'si'),
+('GEN029', 'malo', 'Virus', 'si'),
+('GEN030', 'bueno', 'Respaldo completo', 'si'),
+('GEN031', 'regular', 'Monitor con rayas', 'si'),
+('GEN032', 'medio', 'Parlantes distorsionan', 'si'),
+('GEN033', 'bueno', 'Almacenamiento rápido', 'si'),
+('GEN034', 'regular', 'Cable de poder dañado', 'si'),
+('GEN035', 'malo', 'Disco duro muerto', 'si'),
+('GEN036', 'bueno', 'Configuración óptima', 'si'),
+('GEN037', 'regular', 'Puerto HDMI roto', 'si'),
+('GEN038', 'medio', 'Batería hinchada', 'si'),
+('GEN039', 'bueno', 'Con licencia original', 'si'),
+('GEN040', 'regular', 'Touchpad impreciso', 'si'),
+('GEN041', 'medio', 'Cámara no funciona', 'si'),
+('GEN042', 'bueno', 'En garantía extendida', 'si'),
+('GEN043', 'malo', 'Apagados aleatorios', 'si'),
+('GEN044', 'regular', 'Ruido al girar', 'si'),
+('GEN045', 'bueno', 'Reacondicionado', 'si'),
+('GEN046', 'medio', 'Falla en lector DVD', 'si'),
+('GEN047', 'bueno', 'Actualizado a SSD', 'si'),
+('GEN048', 'regular', 'Teclado numérico no responde', 'si'),
+('GEN049', 'bueno', 'Equipo de gerencia', 'si'),
+('GEN050', 'regular', 'Requiere formateo', 'si');
+GO
+
+-- Ficha_Inventario_Tecnologico (solo 1 registro)
+INSERT INTO Ficha_Inventario_Tecnologico (Id_CodigoAlmacen, Dependencia, Fecha, Cod_Tecnologia, Usuario)
+VALUES ('ALM001', 'Gerencia General', GETDATE(), 'TI', 'Juan Pérez');
+GO
+
+-- ========================================================
+-- 2. TABLAS DEPENDIENTES (50 registros cada una)
+-- ========================================================
+
+-- Harware (tipo: escritorio, laptop, all in one; N_Serie 5 cifras; Unidad CD/DVDRW: si/no; regulador: si/no)
+INSERT INTO Harware VALUES 
+('HW001', 'PROC001', 'DD001', 'GPU001', 'escritorio', 'Dell OptiPlex', '12345', '8GB', 'si', 'si'),
+('HW002', 'PROC002', 'DD002', 'GPU002', 'laptop', 'HP Pavilion', '54321', '16GB', 'no', 'si'),
+('HW003', 'PROC003', 'DD003', 'GPU003', 'all in one', 'Lenovo AIO', '67890', '4GB', 'si', 'no'),
+('HW004', 'PROC004', 'DD004', 'GPU004', 'escritorio', 'Acer Aspire', '11223', '8GB', 'no', 'si'),
+('HW005', 'PROC005', 'DD005', 'GPU005', 'laptop', 'Asus VivoBook', '33445', '12GB', 'si', 'si'),
+('HW006', 'PROC006', 'DD006', 'GPU006', 'escritorio', 'Intel NUC', '55667', '16GB', 'si', 'si'),
+('HW007', 'PROC007', 'DD007', 'GPU007', 'all in one', 'iMac', '77889', '8GB', 'no', 'no'),
+('HW008', 'PROC008', 'DD008', 'GPU008', 'laptop', 'MSI Gaming', '99001', '32GB', 'si', 'si'),
+('HW009', 'PROC009', 'DD009', 'GPU009', 'escritorio', 'Lenovo ThinkCentre', '23456', '16GB', 'si', 'si'),
+('HW010', 'PROC010', 'DD010', 'GPU010', 'laptop', 'Dell Latitude', '34567', '8GB', 'no', 'si'),
+('HW011', 'PROC011', 'DD011', 'GPU011', 'escritorio', 'HP ProDesk', '45678', '8GB', 'si', 'no'),
+('HW012', 'PROC012', 'DD012', 'GPU012', 'all in one', 'LG AIO', '56789', '4GB', 'si', 'si'),
+('HW013', 'PROC013', 'DD013', 'GPU013', 'laptop', 'Samsung Book', '67890', '16GB', 'no', 'si'),
+('HW014', 'PROC014', 'DD014', 'GPU014', 'escritorio', 'Asus ROG', '78901', '32GB', 'si', 'si'),
+('HW015', 'PROC015', 'DD015', 'GPU015', 'laptop', 'Acer Predator', '89012', '16GB', 'si', 'no'),
+('HW016', 'PROC016', 'DD016', 'GPU016', 'all in one', 'HP All-in-One', '90123', '8GB', 'no', 'si'),
+('HW017', 'PROC017', 'DD017', 'GPU017', 'escritorio', 'Dell XPS', '01234', '64GB', 'si', 'si'),
+('HW018', 'PROC018', 'DD018', 'GPU018', 'laptop', 'Lenovo ThinkPad', '13579', '16GB', 'si', 'si'),
+('HW019', 'PROC019', 'DD019', 'GPU019', 'escritorio', 'MSI Trident', '24680', '32GB', 'no', 'si'),
+('HW020', 'PROC020', 'DD020', 'GPU020', 'laptop', 'Razer Blade', '98765', '16GB', 'si', 'si'),
+('HW021', 'PROC021', 'DD021', 'GPU021', 'all in one', 'Dell Inspiron AIO', '11122', '8GB', 'si', 'no'),
+('HW022', 'PROC022', 'DD022', 'GPU022', 'escritorio', 'HP EliteDesk', '33445', '16GB', 'no', 'si'),
+('HW023', 'PROC023', 'DD023', 'GPU023', 'laptop', 'Asus TUF', '55667', '16GB', 'si', 'si'),
+('HW024', 'PROC024', 'DD024', 'GPU024', 'escritorio', 'Acer Veriton', '77889', '8GB', 'si', 'no'),
+('HW025', 'PROC025', 'DD025', 'GPU025', 'laptop', 'LG Gram', '99000', '8GB', 'no', 'si'),
+('HW026', 'PROC026', 'DD026', 'GPU026', 'all in one', 'Lenovo Yoga AIO', '12309', '16GB', 'si', 'si'),
+('HW027', 'PROC027', 'DD027', 'GPU027', 'escritorio', 'Dell Precision', '45609', '32GB', 'si', 'si'),
+('HW028', 'PROC028', 'DD028', 'GPU028', 'laptop', 'HP Spectre', '78909', '16GB', 'si', 'no'),
+('HW029', 'PROC029', 'DD029', 'GPU029', 'escritorio', 'Custom Build', '89009', '64GB', 'no', 'si'),
+('HW030', 'PROC030', 'DD030', 'GPU030', 'laptop', 'Microsoft Surface', '90109', '16GB', 'si', 'si'),
+('HW031', 'PROC031', 'DD031', 'GPU031', 'all in one', 'Asus Zen AIO', '01209', '8GB', 'si', 'si'),
+('HW032', 'PROC032', 'DD032', 'GPU032', 'escritorio', 'Lenovo Legion', '19283', '32GB', 'si', 'no'),
+('HW033', 'PROC033', 'DD033', 'GPU033', 'laptop', 'Acer Swift', '47563', '8GB', 'no', 'si'),
+('HW034', 'PROC034', 'DD034', 'GPU034', 'escritorio', 'Dell Vostro', '58472', '16GB', 'si', 'si'),
+('HW035', 'PROC035', 'DD035', 'GPU035', 'laptop', 'Asus ZenBook', '93847', '16GB', 'si', 'si'),
+('HW036', 'PROC036', 'DD036', 'GPU036', 'all in one', 'HP Pavilion AIO', '10293', '8GB', 'si', 'no'),
+('HW037', 'PROC037', 'DD037', 'GPU037', 'escritorio', 'Intel Core i7', '57684', '16GB', 'no', 'si'),
+('HW038', 'PROC038', 'DD038', 'GPU038', 'laptop', 'Dell G3', '38475', '8GB', 'si', 'si'),
+('HW039', 'PROC039', 'DD039', 'GPU039', 'escritorio', 'AMD Ryzen 7', '29384', '32GB', 'si', 'si'),
+('HW040', 'PROC040', 'DD040', 'GPU040', 'laptop', 'Lenovo IdeaPad', '74839', '12GB', 'si', 'no'),
+('HW041', 'PROC041', 'DD041', 'GPU041', 'all in one', 'Samsung AIO', '38475', '4GB', 'no', 'si'),
+('HW042', 'PROC042', 'DD042', 'GPU042', 'escritorio', 'Gigabyte Aorus', '11223', '64GB', 'si', 'si'),
+('HW043', 'PROC043', 'DD043', 'GPU043', 'laptop', 'Razer Stealth', '33445', '16GB', 'si', 'si'),
+('HW044', 'PROC044', 'DD044', 'GPU044', 'escritorio', 'Asus Prime', '55667', '32GB', 'no', 'si'),
+('HW045', 'PROC045', 'DD045', 'GPU045', 'laptop', 'HP Omen', '77889', '16GB', 'si', 'si'),
+('HW046', 'PROC046', 'DD046', 'GPU046', 'all in one', 'Dell OptiPlex AIO', '99001', '8GB', 'si', 'no'),
+('HW047', 'PROC047', 'DD047', 'GPU047', 'escritorio', 'Lenovo ThinkStation', '23456', '128GB', 'si', 'si'),
+('HW048', 'PROC048', 'DD048', 'GPU048', 'laptop', 'MacBook Pro', '34567', '16GB', 'no', 'si'),
+('HW049', 'PROC049', 'DD049', 'GPU049', 'escritorio', 'HP Z Workstation', '45678', '64GB', 'si', 'si'),
+('HW050', 'PROC050', 'DD050', 'GPU050', 'laptop', 'Asus ROG Strix', '56789', '32GB', 'si', 'si');
+GO
+
+-- Sofware (SO, licencia, ofimática, antivirus, navegador, desarrollo, diseño)
+INSERT INTO Sofware VALUES 
+('SW001', 'SO001', 'office2016', 'nod32', 'chrome', 'visual studio', 'photohop'),
+('SW002', 'SO002', 'office2013', 'avast', 'mozilla', 'sql server', 'ilustrador'),
+('SW003', 'SO003', 'office2010', 'otro(avira)', 'iexplorer', 'otro(python)', 'indesing'),
+('SW004', 'SO004', 'rep.audio.pdf reader', 'nod32', 'chrome', 'visual studio', 'otro(canva)'),
+('SW005', 'SO005', 'ccleaner', 'avast', 'mozilla', 'sql server', 'photohop'),
+('SW006', 'SO006', 'winrar', 'nod32', 'chrome', 'otro(eclipse)', 'ilustrador'),
+('SW007', 'SO007', 'repvio', 'otro(mcafee)', 'mozilla', 'visual studio', 'indesing'),
+('SW008', 'SO008', 'otro(notepad++)', 'nod32', 'chrome', 'sql server', 'photohop'),
+('SW009', 'SO009', 'office2016', 'avast', 'iexplorer', 'otro(intellij)', 'ilustrador'),
+('SW010', 'SO010', 'office2013', 'nod32', 'chrome', 'visual studio', 'indesing'),
+('SW011', 'SO011', 'office2010', 'otro(kaspersky)', 'mozilla', 'sql server', 'photohop'),
+('SW012', 'SO012', 'rep.audio.pdf reader', 'avast', 'chrome', 'otro(netbeans)', 'ilustrador'),
+('SW013', 'SO013', 'ccleaner', 'nod32', 'mozilla', 'visual studio', 'indesing'),
+('SW014', 'SO014', 'winrar', 'otro(symantec)', 'iexplorer', 'sql server', 'photohop'),
+('SW015', 'SO015', 'repvio', 'nod32', 'chrome', 'otro(pycharm)', 'ilustrador'),
+('SW016', 'SO016', 'otro(blender)', 'avast', 'mozilla', 'visual studio', 'indesing'),
+('SW017', 'SO017', 'office2016', 'nod32', 'chrome', 'sql server', 'photohop'),
+('SW018', 'SO018', 'office2013', 'otro(avg)', 'iexplorer', 'otro(android studio)', 'ilustrador'),
+('SW019', 'SO019', 'office2010', 'avast', 'mozilla', 'visual studio', 'indesing'),
+('SW020', 'SO020', 'rep.audio.pdf reader', 'nod32', 'chrome', 'sql server', 'photohop'),
+('SW021', 'SO021', 'ccleaner', 'otro(malwarebytes)', 'mozilla', 'otro(rstudio)', 'ilustrador'),
+('SW022', 'SO022', 'winrar', 'avast', 'iexplorer', 'visual studio', 'indesing'),
+('SW023', 'SO023', 'repvio', 'nod32', 'chrome', 'sql server', 'photohop'),
+('SW024', 'SO024', 'otro(teamviewer)', 'otro(eset)', 'mozilla', 'otro(xamarin)', 'ilustrador'),
+('SW025', 'SO025', 'office2016', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW026', 'SO026', 'office2013', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW027', 'SO027', 'office2010', 'otro(panda)', 'iexplorer', 'otro(matlab)', 'ilustrador'),
+('SW028', 'SO028', 'rep.audio.pdf reader', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW029', 'SO029', 'ccleaner', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW030', 'SO030', 'winrar', 'otro(fsecure)', 'iexplorer', 'otro(goland)', 'ilustrador'),
+('SW031', 'SO031', 'repvio', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW032', 'SO032', 'otro(putty)', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW033', 'SO033', 'office2016', 'otro(comodo)', 'iexplorer', 'otro(zend studio)', 'ilustrador'),
+('SW034', 'SO034', 'office2013', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW035', 'SO035', 'office2010', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW036', 'SO036', 'rep.audio.pdf reader', 'otro(vipre)', 'iexplorer', 'otro(phpstorm)', 'ilustrador'),
+('SW037', 'SO037', 'ccleaner', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW038', 'SO038', 'winrar', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW039', 'SO039', 'repvio', 'otro(sophos)', 'iexplorer', 'otro(jupyter)', 'ilustrador'),
+('SW040', 'SO040', 'otro(keepass)', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW041', 'SO041', 'office2016', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW042', 'SO042', 'office2013', 'otro(webroot)', 'iexplorer', 'otro(coda)', 'ilustrador'),
+('SW043', 'SO043', 'office2010', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW044', 'SO044', 'rep.audio.pdf reader', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW045', 'SO045', 'ccleaner', 'otro(bitdefender)', 'iexplorer', 'otro(sublime)', 'ilustrador'),
+('SW046', 'SO046', 'winrar', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW047', 'SO047', 'repvio', 'nod32', 'mozilla', 'sql server', 'photohop'),
+('SW048', 'SO048', 'otro(vlc)', 'otro(k7)', 'iexplorer', 'otro(atom)', 'ilustrador'),
+('SW049', 'SO049', 'office2016', 'avast', 'chrome', 'visual studio', 'indesing'),
+('SW050', 'SO050', 'office2013', 'nod32', 'mozilla', 'sql server', 'photohop');
+GO
+
+-- Accesorio_partes (relaciona monitor, teclado, mouse, parlante)
+INSERT INTO Accesorio_partes VALUES 
+('AP001', 'MON001', 'TEC001', 'MOU001', 'PAR001'),
+('AP002', 'MON002', 'TEC002', 'MOU002', 'PAR002'),
+('AP003', 'MON003', 'TEC003', 'MOU003', 'PAR003'),
+('AP004', 'MON004', 'TEC004', 'MOU004', 'PAR004'),
+('AP005', 'MON005', 'TEC005', 'MOU005', 'PAR005'),
+('AP006', 'MON006', 'TEC006', 'MOU006', 'PAR006'),
+('AP007', 'MON007', 'TEC007', 'MOU007', 'PAR007'),
+('AP008', 'MON008', 'TEC008', 'MOU008', 'PAR008'),
+('AP009', 'MON009', 'TEC009', 'MOU009', 'PAR009'),
+('AP010', 'MON010', 'TEC010', 'MOU010', 'PAR010'),
+('AP011', 'MON011', 'TEC011', 'MOU011', 'PAR011'),
+('AP012', 'MON012', 'TEC012', 'MOU012', 'PAR012'),
+('AP013', 'MON013', 'TEC013', 'MOU013', 'PAR013'),
+('AP014', 'MON014', 'TEC014', 'MOU014', 'PAR014'),
+('AP015', 'MON015', 'TEC015', 'MOU015', 'PAR015'),
+('AP016', 'MON016', 'TEC016', 'MOU016', 'PAR016'),
+('AP017', 'MON017', 'TEC017', 'MOU017', 'PAR017'),
+('AP018', 'MON018', 'TEC018', 'MOU018', 'PAR018'),
+('AP019', 'MON019', 'TEC019', 'MOU019', 'PAR019'),
+('AP020', 'MON020', 'TEC020', 'MOU020', 'PAR020'),
+('AP021', 'MON021', 'TEC021', 'MOU021', 'PAR021'),
+('AP022', 'MON022', 'TEC022', 'MOU022', 'PAR022'),
+('AP023', 'MON023', 'TEC023', 'MOU023', 'PAR023'),
+('AP024', 'MON024', 'TEC024', 'MOU024', 'PAR024'),
+('AP025', 'MON025', 'TEC025', 'MOU025', 'PAR025'),
+('AP026', 'MON026', 'TEC026', 'MOU026', 'PAR026'),
+('AP027', 'MON027', 'TEC027', 'MOU027', 'PAR027'),
+('AP028', 'MON028', 'TEC028', 'MOU028', 'PAR028'),
+('AP029', 'MON029', 'TEC029', 'MOU029', 'PAR029'),
+('AP030', 'MON030', 'TEC030', 'MOU030', 'PAR030'),
+('AP031', 'MON031', 'TEC031', 'MOU031', 'PAR031'),
+('AP032', 'MON032', 'TEC032', 'MOU032', 'PAR032'),
+('AP033', 'MON033', 'TEC033', 'MOU033', 'PAR033'),
+('AP034', 'MON034', 'TEC034', 'MOU034', 'PAR034'),
+('AP035', 'MON035', 'TEC035', 'MOU035', 'PAR035'),
+('AP036', 'MON036', 'TEC036', 'MOU036', 'PAR036'),
+('AP037', 'MON037', 'TEC037', 'MOU037', 'PAR037'),
+('AP038', 'MON038', 'TEC038', 'MOU038', 'PAR038'),
+('AP039', 'MON039', 'TEC039', 'MOU039', 'PAR039'),
+('AP040', 'MON040', 'TEC040', 'MOU040', 'PAR040'),
+('AP041', 'MON041', 'TEC041', 'MOU041', 'PAR041'),
+('AP042', 'MON042', 'TEC042', 'MOU042', 'PAR042'),
+('AP043', 'MON043', 'TEC043', 'MOU043', 'PAR043'),
+('AP044', 'MON044', 'TEC044', 'MOU044', 'PAR044'),
+('AP045', 'MON045', 'TEC045', 'MOU045', 'PAR045'),
+('AP046', 'MON046', 'TEC046', 'MOU046', 'PAR046'),
+('AP047', 'MON047', 'TEC047', 'MOU047', 'PAR047'),
+('AP048', 'MON048', 'TEC048', 'MOU048', 'PAR048'),
+('AP049', 'MON049', 'TEC049', 'MOU049', 'PAR049'),
+('AP050', 'MON050', 'TEC050', 'MOU050', 'PAR050');
+GO
+
+-- ========================================================
+-- 3. TABLA CENTRAL Equipo_Inventario (50 registros)
+-- ========================================================
+INSERT INTO Equipo_Inventario VALUES 
+('INV001', 'ALM001', 'HW001', 'SW001', 'GEN001', 'AP001', '1001'),
+('INV002', 'ALM001', 'HW002', 'SW002', 'GEN002', 'AP002', '1002'),
+('INV003', 'ALM001', 'HW003', 'SW003', 'GEN003', 'AP003', '1003'),
+('INV004', 'ALM001', 'HW004', 'SW004', 'GEN004', 'AP004', '1004'),
+('INV005', 'ALM001', 'HW005', 'SW005', 'GEN005', 'AP005', '1005'),
+('INV006', 'ALM001', 'HW006', 'SW006', 'GEN006', 'AP006', '1006'),
+('INV007', 'ALM001', 'HW007', 'SW007', 'GEN007', 'AP007', '1007'),
+('INV008', 'ALM001', 'HW008', 'SW008', 'GEN008', 'AP008', '1008'),
+('INV009', 'ALM001', 'HW009', 'SW009', 'GEN009', 'AP009', '1009'),
+('INV010', 'ALM001', 'HW010', 'SW010', 'GEN010', 'AP010', '1010'),
+('INV011', 'ALM001', 'HW011', 'SW011', 'GEN011', 'AP011', '1011'),
+('INV012', 'ALM001', 'HW012', 'SW012', 'GEN012', 'AP012', '1012'),
+('INV013', 'ALM001', 'HW013', 'SW013', 'GEN013', 'AP013', '1013'),
+('INV014', 'ALM001', 'HW014', 'SW014', 'GEN014', 'AP014', '1014'),
+('INV015', 'ALM001', 'HW015', 'SW015', 'GEN015', 'AP015', '1015'),
+('INV016', 'ALM001', 'HW016', 'SW016', 'GEN016', 'AP016', '1016'),
+('INV017', 'ALM001', 'HW017', 'SW017', 'GEN017', 'AP017', '1017'),
+('INV018', 'ALM001', 'HW018', 'SW018', 'GEN018', 'AP018', '1018'),
+('INV019', 'ALM001', 'HW019', 'SW019', 'GEN019', 'AP019', '1019'),
+('INV020', 'ALM001', 'HW020', 'SW020', 'GEN020', 'AP020', '1020'),
+('INV021', 'ALM001', 'HW021', 'SW021', 'GEN021', 'AP021', '1021'),
+('INV022', 'ALM001', 'HW022', 'SW022', 'GEN022', 'AP022', '1022'),
+('INV023', 'ALM001', 'HW023', 'SW023', 'GEN023', 'AP023', '1023'),
+('INV024', 'ALM001', 'HW024', 'SW024', 'GEN024', 'AP024', '1024'),
+('INV025', 'ALM001', 'HW025', 'SW025', 'GEN025', 'AP025', '1025'),
+('INV026', 'ALM001', 'HW026', 'SW026', 'GEN026', 'AP026', '1026'),
+('INV027', 'ALM001', 'HW027', 'SW027', 'GEN027', 'AP027', '1027'),
+('INV028', 'ALM001', 'HW028', 'SW028', 'GEN028', 'AP028', '1028'),
+('INV029', 'ALM001', 'HW029', 'SW029', 'GEN029', 'AP029', '1029'),
+('INV030', 'ALM001', 'HW030', 'SW030', 'GEN030', 'AP030', '1030'),
+('INV031', 'ALM001', 'HW031', 'SW031', 'GEN031', 'AP031', '1031'),
+('INV032', 'ALM001', 'HW032', 'SW032', 'GEN032', 'AP032', '1032'),
+('INV033', 'ALM001', 'HW033', 'SW033', 'GEN033', 'AP033', '1033'),
+('INV034', 'ALM001', 'HW034', 'SW034', 'GEN034', 'AP034', '1034'),
+('INV035', 'ALM001', 'HW035', 'SW035', 'GEN035', 'AP035', '1035'),
+('INV036', 'ALM001', 'HW036', 'SW036', 'GEN036', 'AP036', '1036'),
+('INV037', 'ALM001', 'HW037', 'SW037', 'GEN037', 'AP037', '1037'),
+('INV038', 'ALM001', 'HW038', 'SW038', 'GEN038', 'AP038', '1038'),
+('INV039', 'ALM001', 'HW039', 'SW039', 'GEN039', 'AP039', '1039'),
+('INV040', 'ALM001', 'HW040', 'SW040', 'GEN040', 'AP040', '1040'),
+('INV041', 'ALM001', 'HW041', 'SW041', 'GEN041', 'AP041', '1041'),
+('INV042', 'ALM001', 'HW042', 'SW042', 'GEN042', 'AP042', '1042'),
+('INV043', 'ALM001', 'HW043', 'SW043', 'GEN043', 'AP043', '1043'),
+('INV044', 'ALM001', 'HW044', 'SW044', 'GEN044', 'AP044', '1044'),
+('INV045', 'ALM001', 'HW045', 'SW045', 'GEN045', 'AP045', '1045'),
+('INV046', 'ALM001', 'HW046', 'SW046', 'GEN046', 'AP046', '1046'),
+('INV047', 'ALM001', 'HW047', 'SW047', 'GEN047', 'AP047', '1047'),
+('INV048', 'ALM001', 'HW048', 'SW048', 'GEN048', 'AP048', '1048'),
+('INV049', 'ALM001', 'HW049', 'SW049', 'GEN049', 'AP049', '1049'),
+('INV050', 'ALM001', 'HW050', 'SW050', 'GEN050', 'AP050', '1050');
+GO
+
+SELECT * FROM Procesador;
+go
+SELECT * FROM Disco_Duro;
+go
+SELECT * FROM GPU;
+go
+SELECT * FROM Ficha_Inventario_Tecnologico;
+go
+SELECT * FROM Acceso_Remoto;
+go
+SELECT * FROM General;
+go
+SELECT * FROM Sistema_Operativo;
+go
+SELECT * FROM Monitor;
+go
+SELECT * FROM Teclado;
+go
+SELECT * FROM Mouse;
+go
+SELECT * FROM Parlante;
+go
+SELECT * FROM Harware;
+go
+SELECT * FROM Sofware;
+go
+SELECT * FROM Accesorio_partes;
+go
+SELECT * FROM Equipo_Inventario;
+go
+
+USE GestionInventarioTecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 1: Mostrar todos los registros de la tabla equipo
+-- ========================================================
+-- Enunciado: Mostrar todos los registros de la tabla equipo
+-- Verificación y Resultado:
+SELECT * FROM Equipo_Inventario;
+GO
+
+-- ========================================================
+-- Proyecto 2 – Mostrar columnas específicas de usuarios
+-- ========================================================
+-- Enunciado: Mostrar únicamente el código y nombre de los usuarios.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT Id_CodigoAlmacen, Usuario 
+FROM Ficha_Inventario_Tecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 3 – Uso de alias para columnas
+-- ========================================================
+-- Enunciado: Mostrar el nombre del usuario utilizando alias personalizados.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT Usuario AS Nombre_Usuario_Responsable
+FROM Ficha_Inventario_Tecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 4 – Uso de alias para tablas
+-- ========================================================
+-- Enunciado: Mostrar datos de la tabla dependencia utilizando alias.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT f.Id_CodigoAlmacen, f.Dependencia 
+FROM Ficha_Inventario_Tecnologico AS f;
+GO
+
+-- ========================================================
+-- Proyecto 5 – Mostrar columnas renombradas
+-- ========================================================
+-- Enunciado: Mostrar información de equipos con nombres amigables.
+-- Verificación:
+SELECT * FROM Equipo_Inventario;
+-- Consulta del ejercicio:
+SELECT 
+    Id_Inventario AS Codigo_Inventario,
+    ID_Harware AS Identificador_Hardware,
+    ID_Sofware AS Identificador_Software
+FROM Equipo_Inventario;
+GO
+
+-- ========================================================
+-- Proyecto 6 – Suma de memoria RAM
+-- ========================================================
+-- Enunciado: Sumar 4 GB adicionales a la memoria RAM mostrada.
+-- Verificación:
+SELECT * FROM Harware;
+-- Consulta del ejercicio:
+SELECT 
+    ID_Harware,
+    Ram AS RAM_Original,
+    CAST(REPLACE(Ram, 'GB', '') AS INT) + 4 AS RAM_Calculada_Num,
+    CONCAT(CAST(REPLACE(Ram, 'GB', '') AS INT) + 4, 'GB') AS RAM_Final_Actualizada
+FROM Harware;
+GO
+
+-- ========================================================
+-- Proyecto 7 – Multiplicación de capacidad de disco
+-- ========================================================
+-- Enunciado: Calcular el doble de almacenamiento.
+-- Verificación:
+SELECT * FROM Disco_Duro;
+-- Consulta del ejercicio:
+SELECT 
+    ID_DiscoDuro,
+    DiscoDuro_Capacidad AS Capacidad_Original,
+    CASE 
+        WHEN DiscoDuro_Capacidad LIKE '%GB%' THEN 
+            CONCAT(CAST(LEFT(DiscoDuro_Capacidad, CHARINDEX('GB', DiscoDuro_Capacidad) - 1) AS INT) * 2, 'GB')
+        WHEN DiscoDuro_Capacidad LIKE '%TB%' THEN 
+            CONCAT(CAST(LEFT(DiscoDuro_Capacidad, CHARINDEX('TB', DiscoDuro_Capacidad) - 1) AS INT) * 2, 'TB')
+        ELSE 'No_Calculable'
+    END AS Doble_Almacenamiento
+FROM Disco_Duro;
+GO
+
+-- ========================================================
+-- Proyecto 8 – División segura
+-- ========================================================
+-- Enunciado: Demostrar cómo evitar errores de división.
+-- Verificación: Operación en memoria.
+DECLARE @Divisor INT = 0;
+SELECT 
+    100 AS Numerador,
+    @Divisor AS Divisor_Cero,
+    100 / NULLIF(@Divisor, 0) AS Resultado_Division_Segura;
+GO
+
+-- ========================================================
+-- Proyecto 9 – Uso de precedencia de operadores
+-- ========================================================
+-- Enunciado: Comparar operaciones matemáticas.
+-- Verificación: Operación en memoria.
+SELECT 
+    5 + 3 * 2 AS Op_Sin_Parentesis,
+    (5 + 3) * 2 AS Op_Con_Parentesis;
+GO
+
+-- ========================================================
+-- Proyecto 10 – Manejo de valores nulos
+-- ========================================================
+-- Enunciado: Mostrar valores nulos reemplazados.
+-- Verificación:
+SELECT * FROM General;
+-- Consulta del ejercicio:
+SELECT 
+    ID_General,
+    Estado,
+    Observacion AS Observacion_Original,
+    ISNULL(Observacion, 'Sin_Observaciones_Registradas') AS Observacion_Reemplazada
+FROM General;
+GO
+
+-- ========================================================
+-- Proyecto 11 – Concatenar texto simple
+-- ========================================================
+-- Enunciado: Mostrar mensaje personalizado.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT 
+    Id_CodigoAlmacen,
+    CONCAT('Usuario responsable: ', Usuario) AS Detalle_Responsable
+FROM Ficha_Inventario_Tecnologico;
+GO
+-- ========================================================
+-- Proyecto 12 – Concatenar datos de equipo
+-- ========================================================
+-- Enunciado: Unir marca y modelo.
+-- Verificación:
+SELECT * FROM Monitor;
+-- Consulta del ejercicio:
+SELECT 
+    N_Serie_Monitor,
+    CONCAT(marca, ' ', modelo) AS Especificacion_Monitor
+FROM Monitor;
+GO
+
+-- ========================================================
+-- Proyecto 13 – Concatenar con espacios
+-- ========================================================
+-- Enunciado: Mostrar información formateada.
+-- Verificación: (La tabla Mouse solo tiene Serie y Modelo según tu script)
+SELECT * FROM Mouse;
+-- Consulta del ejercicio:
+SELECT 
+    N_Serie_Mouse,
+    CONCAT('Modelo: ', modelo, ' | N° Serie: ', N_Serie_Mouse) AS Detalles_Mouse
+FROM Mouse;
+GO
+
+-- ========================================================
+-- Proyecto 14 – Concatenación con valores nulos
+-- ========================================================
+-- Enunciado: Evitar problemas de concatenación con NULL.
+-- Verificación:
+SELECT * FROM General;
+-- Consulta del ejercicio:
+SELECT 
+    ID_General,
+    'Estado: ' + Estado + ' - Obs: ' + Observacion AS Falla_Operador_Suma,
+    CONCAT('Estado: ', Estado, ' - Obs: ', Observacion) AS Concatenacion_Segura
+FROM General;
+GO
+
+-- ========================================================
+-- Proyecto 15 – Uso de COALESCE
+-- ========================================================
+-- Enunciado: Mostrar valores alternativos.
+-- Verificación:
+SELECT * FROM General;
+-- Consulta del ejercicio:
+SELECT 
+    ID_General,
+    Estado,
+    COALESCE(Observacion, 'SIN_NOVEDADES') AS Estado_Observacion
+FROM General;
+GO
+-- ========================================================
+-- Proyecto 16 – Uso de igualdad
+-- ========================================================
+-- Enunciado: Mostrar equipos marca HP.
+-- Verificación:
+SELECT * FROM Monitor;
+-- Consulta del ejercicio:
+SELECT N_Serie_Monitor, marca, modelo
+FROM Monitor
+WHERE marca = 'HP';
+GO
+
+-- ========================================================
+-- Proyecto 17 – Uso de desigualdad
+-- ========================================================
+-- Enunciado: Mostrar equipos que no son HP.
+-- Verificación:
+SELECT * FROM Monitor;
+-- Consulta del ejercicio:
+SELECT N_Serie_Monitor, marca, modelo
+FROM Monitor
+WHERE marca <> 'HP';
+GO
+
+-- ========================================================
+-- Proyecto 18 – Uso de mayor que
+-- ========================================================
+-- Enunciado: Mostrar equipos con id mayor a 10.
+-- Verificación:
+SELECT * FROM Equipo_Inventario;
+-- Consulta del ejercicio:
+SELECT Id_Inventario, ID_Harware, ID_Sofware
+FROM Equipo_Inventario
+WHERE CAST(SUBSTRING(Id_Inventario, 4, LEN(Id_Inventario)) AS INT) > 10;
+GO
+
+-- ========================================================
+-- Proyecto 19 – Uso de AND
+-- ========================================================
+-- Enunciado: Mostrar laptops HP.
+-- Verificación:
+SELECT * FROM Equipo_Inventario;
+SELECT * FROM Harware;
+SELECT * FROM Monitor;
+-- Consulta del ejercicio:
+SELECT E.Id_Inventario, H.tipo, M.marca
+FROM Equipo_Inventario AS E
+INNER JOIN Harware AS H ON E.ID_Harware = H.ID_Harware
+INNER JOIN Accesorio_partes AS AP ON E.ID_Partes = AP.ID_Partes
+INNER JOIN Monitor AS M ON AP.N_Serie_Monitor = M.N_Serie_Monitor
+WHERE H.tipo = 'laptop' AND M.marca = 'HP';
+GO
+
+-- ========================================================
+-- Proyecto 20 – Uso de OR y paréntesis
+-- ========================================================
+-- Enunciado: Mostrar equipos HP o Dell tipo laptop.
+-- Verificación:
+SELECT * FROM Equipo_Inventario;
+SELECT * FROM Harware;
+SELECT * FROM Monitor;
+-- Consulta del ejercicio:
+SELECT E.Id_Inventario, H.tipo, M.marca
+FROM Equipo_Inventario AS E
+INNER JOIN Harware AS H ON E.ID_Harware = H.ID_Harware
+INNER JOIN Accesorio_partes AS AP ON E.ID_Partes = AP.ID_Partes
+INNER JOIN Monitor AS M ON AP.N_Serie_Monitor = M.N_Serie_Monitor
+WHERE (M.marca = 'HP' OR M.marca = 'Dell') 
+  AND H.tipo = 'laptop';
+GO
+
+-- ========================================================
+-- Proyecto 24 – Uso de IN con valores explícitos
+-- ========================================================
+-- Enunciado: Mostrar equipos HP y Dell.
+-- Verificación:
+SELECT * FROM Monitor;
+-- Consulta del ejercicio:
+SELECT N_Serie_Monitor, marca, modelo
+FROM Monitor
+WHERE marca IN ('HP', 'Dell');
+GO
+
+
+-- ========================================================
+-- Proyecto 21 – Uso de LIKE con porcentaje
+-- ========================================================
+-- Enunciado: Buscar usuarios que empiecen con U.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT Id_CodigoAlmacen, Usuario, Dependencia
+FROM Ficha_Inventario_Tecnologico
+WHERE Usuario LIKE 'U%';
+GO
+
+-- ========================================================
+-- Proyecto 22 – Uso de LIKE con guion bajo
+-- ========================================================
+-- Enunciado: Buscar usuarios con patrón específico.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT Id_CodigoAlmacen, Usuario
+FROM Ficha_Inventario_Tecnologico
+WHERE Usuario LIKE '_a%';
+GO
+
+-- ========================================================
+-- Proyecto 23 – Uso de BETWEEN
+-- ========================================================
+-- Enunciado: Mostrar equipos con IDs entre 5 y 15.
+-- Verificación:
+SELECT * FROM Equipo_Inventario;
+-- Consulta del ejercicio:
+SELECT Id_Inventario, ID_Harware, ID_Sofware
+FROM Equipo_Inventario
+WHERE CAST(SUBSTRING(Id_Inventario, 4, LEN(Id_Inventario)) AS INT) BETWEEN 5 AND 15;
+GO
+
+-- ========================================================
+-- Proyecto 25 – Uso de IN con subconsulta simple
+-- ========================================================
+-- Enunciado: Mostrar usuarios pertenecientes a dependencias existentes.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT Id_CodigoAlmacen, Usuario, Dependencia
+FROM Ficha_Inventario_Tecnologico
+WHERE Dependencia IN (
+    SELECT DISTINCT Dependencia 
+    FROM Ficha_Inventario_Tecnologico 
+    WHERE Dependencia IS NOT NULL
+);
+GO
+
+-- ========================================================
+-- Proyecto 26 – Extraer año
+-- ========================================================
+-- Enunciado: Mostrar el año de registro.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT Id_CodigoAlmacen, Usuario, Fecha, YEAR(Fecha) AS Anio_Registro
+FROM Ficha_Inventario_Tecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 27 – Extraer mes y día
+-- ========================================================
+-- Enunciado: Mostrar mes y día.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT 
+    Id_CodigoAlmacen, 
+    Fecha, 
+    MONTH(Fecha) AS Numero_Mes, 
+    DAY(Fecha) AS Dia_Registro
+FROM Ficha_Inventario_Tecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 28 – Agregar días a una fecha
+-- ========================================================
+-- Enunciado: Calcular fecha futura.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT 
+    Id_CodigoAlmacen, 
+    Fecha AS Fecha_Revision_Original, 
+    DATEADD(DAY, 30, Fecha) AS Fecha_Proximo_Mantenimiento
+FROM Ficha_Inventario_Tecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 29 – Diferencia entre fechas
+-- ========================================================
+-- Enunciado: Calcular días transcurridos.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT 
+    Id_CodigoAlmacen, 
+    Fecha AS Fecha_Ingreso, 
+    GETDATE() AS Fecha_Actual,
+    DATEDIFF(DAY, Fecha, GETDATE()) AS Dias_Transcurridos
+FROM Ficha_Inventario_Tecnologico;
+GO
+
+-- ========================================================
+-- Proyecto 30 – Convertir formato de fechas
+-- ========================================================
+-- Enunciado: Mostrar fechas en distintos formatos.
+-- Verificación:
+SELECT * FROM Ficha_Inventario_Tecnologico;
+-- Consulta del ejercicio:
+SELECT 
+    Id_CodigoAlmacen, 
+    Fecha AS Formato_Nativo,
+    CONVERT(VARCHAR, Fecha, 103) AS Formato_Latino_Corto,
+    CONVERT(VARCHAR, Fecha, 111) AS Formato_Estandar_Japon
+FROM Ficha_Inventario_Tecnologico;
+GO
