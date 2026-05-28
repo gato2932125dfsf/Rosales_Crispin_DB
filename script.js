@@ -892,8 +892,8 @@
         uploaded: 'Precargado', isStatic: true
       },
         {
-        name: '   Semana 8 - Sem8_SQL SERVER Rosales.txt',
-        data: 'carpeta1/Sem8_SQL SERVER Rosales.txt',
+        name: '   Semana 8 - Sem8_SQL SERVER ROSALES.pdf',
+        data: 'carpeta1/Sem8_SQL SERVER ROSALES.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
