@@ -902,6 +902,12 @@
         data: 'carpeta1/Sem8_ResumenCreativo_compressed.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 8 - Sem8_Resumen30SQL.pdf',
+        data: 'carpeta1/Sem8_Resumen30SQL.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
       }
        
     ],
