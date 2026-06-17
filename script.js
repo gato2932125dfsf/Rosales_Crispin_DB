@@ -920,7 +920,7 @@
       },
         {
         name: '   Semana 9 - Sem9_Funciones.pdf',
-        data: 'carpeta1/SSem9_Funciones.pdf',
+        data: 'carpeta1/Sem9_Funciones.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
