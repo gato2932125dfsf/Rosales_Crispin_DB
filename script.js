@@ -911,6 +911,39 @@
       }
        
     ],
+     u3_t09: [
+      {
+        name: '   Semana 9 - Sem9_Vistas.pdf',
+        data: 'carpeta1/Sem9_Vistas.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 9 - Sem9_Funciones.pdf',
+        data: 'carpeta1/SSem9_Funciones.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 9 - Sem9_Esquemas.pdf',
+        data: 'carpeta1/Sem9_Esquemas.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 9 - Sem9_Indices.pdf',
+        data: 'carpeta1/Sem9_Indices.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 9 - Sem9_Store Procedures.pdf',
+        data: 'carpeta1/Sem9_Store Procedures.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+    ],
+     
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
