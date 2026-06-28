@@ -943,6 +943,27 @@
         uploaded: 'Precargado', isStatic: true
       }
     ],
+     u3_t10: [
+      {
+        name: '   Semana 10 - Sem10_BaseDeDatosReglamento de Grados y titulos.pdf',
+        data: 'carpeta1/Sem10_BaseDeDatosReglamento de Grados y titulos.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 10 - Sem10_RACTIVIDADES DE ESTUDIO.pdf',
+        data: 'carpeta1/Sem10_RACTIVIDADES DE ESTUDIO.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 10 - Sem10_Infografias.pdf',
+        data: 'carpeta1/Sem9_Esquemas.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      
+    ],
+     
      
   };
   
