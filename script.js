@@ -986,8 +986,8 @@ u3_t10:[
         uploaded: 'Precargado', isStatic: true
       },
       {
-        name: '   Semana 10 - Manual de Azure .pdf',
-        data: 'carpeta1/Manual de Azure .pdf',
+        name: '   Semana 11 - Sem11_RACTIVIDADES DE ESTUDIO.pdf',
+        data: 'carpeta1/Sem11_RACTIVIDADES DE ESTUDIO.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
