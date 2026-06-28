@@ -980,7 +980,7 @@ u3_t10:[
      u3_t11:[
 
       {
-        name: '   Semana 11 - Sem11_RActividadesDesarrollo.pdf',
+        name: '   Semana 11 - Sem11_Infografias de Aprendizaje.pdf',
         data: 'carpeta1/Sem11_RActividadesDesarrollo.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
