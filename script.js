@@ -969,6 +969,12 @@ u3_t10:[
         data: 'carpeta1/Sem10_Infografias de Aprendizaje.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
+      },
+        {
+        name: '   Semana 10 - Manual de Azure .pdf',
+        data: 'carpeta1/Manual de Azure .pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
       }
 ],
   };
