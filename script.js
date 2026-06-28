@@ -781,7 +781,7 @@
     u1_t01: [
       {
         name: 'Semana1 Informe tecnico comparativo de Arquitecturas.pdf',
-        data: 'carpeta1/Sem1_Informe tecnico comparativo de Arquitecturas.pdf',
+        data: 'carpeta1/Semana1_Informe tecnico comparativo de Arquitecturas.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
@@ -795,7 +795,7 @@
       },
       {
         name: 'Semana2 Desarrollo Modelado Entidad Relacion BD II.pdf',
-        data: 'carpeta1/Sem2_Desarrollo Modelado Entidad Relacion BD II .pdf',
+        data: 'carpeta1/Semana2_Desarrollo Modelado Entidad Relacion BD II .pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
@@ -834,136 +834,8 @@
         uploaded: 'Precargado', isStatic: true
       }
     ],
-     u2_t05: [
-      {
-        name: '   Semana 5 - Sem5_NormalCoreccion.pdf',
-        data: 'carpeta1/Sem5_NormalCoreccion.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-       {
-        name: 'Semana 5 - Ficha inventario Tecnologico.pdf',
-        data: 'carpeta1/Sem5_fichaInventarioEquipos.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: 'Semana 5 - Desarrollo Resume.pdf',
-        data: 'carpeta1/Sem5_Desarrollon Resum.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      }   
-    ],
-     u2_t06: [
-      {
-        name: '   Semana 6 - Sem6_Desarrollo Resumen.pdf',
-        data: 'carpeta1/Sem6_Desarrollon Resum.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 6 - Preguntas Recreativas.pdf',
-        data: 'carpeta1/Sem6_Preguntas Recreativas.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      }
-       
-    ],
-     u2_t07: [
-      {
-        name: '   Semana 7 - Sem7_Desarrollo Resumen.pdf',
-        data: 'carpeta1/Sem7_Desarrollon Resum.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      }
-       
-    ],
-     u2_t08: [
-      {
-        name: '   Semana 8 - Sem8_ActividadesDesarrollo.pdf',
-        data: 'carpeta1/Sem8_ActividadesDesarrollo.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 8 - Sem8_ResumenActividades.pdf',
-        data: 'carpeta1/Sem8_ResumenActividades.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 8 - Sem8_SQL SERVER ROSALES.pdf',
-        data: 'carpeta1/Sem8_SQL SERVER ROSALES.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 8 - Sem8_ResumenCreativo_compressed.pdf',
-        data: 'carpeta1/Sem8_ResumenCreativo_compressed.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 8 - Sem8_Resumen30SQL.pdf',
-        data: 'carpeta1/Sem8_Resumen30SQL.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      }  
-    ],
-     u3_t09: [
-      {
-        name: '   Semana 9 - Sem9_Vistas.pdf',
-        data: 'carpeta1/Sem9_Vistas.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 9 - Sem9_Funciones.pdf',
-        data: 'carpeta1/Sem9_Funciones.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 9 - Sem9_Esquemas.pdf',
-        data: 'carpeta1/Sem9_Esquemas.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 9 - Sem9_Indices.pdf',
-        data: 'carpeta1/Sem9_Indices.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 9 - Sem9_Store Procedures.pdf',
-        data: 'carpeta1/Sem9_Store Procedures.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      }
-    ],
-     u3_t10: [
-      {
-        name: '   Semana 10 - Sem10_BaseDeDatosReglamento de Grados y titulos.pdf',
-        data: 'carpeta1/Sem10_BaseDeDatosReglamento de Grados y titulos.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 10 - Sem10_RACTIVIDADES DE ESTUDIO.pdf',
-        data: 'carpeta1/Sem10_RACTIVIDADES DE ESTUDIO.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      },
-        {
-        name: '   Semana 10 - Sem10_Infografias.pdf',
-        data: 'carpeta1/Sem9_Esquemas.pdf',
-        size: null, type: 'pdf', folder: 'carpeta1',
-        uploaded: 'Precargado', isStatic: true
-      
-    ],
-      
   };
+  
   /* Combina archivos estáticos con los del storage para una semana */
   function getAllFilesForWeek(key) {
     const stored  = getWeekFiles(key);                // archivos subidos por admin
