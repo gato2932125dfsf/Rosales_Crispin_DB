@@ -992,6 +992,21 @@ u3_t10:[
         uploaded: 'Precargado', isStatic: true
       }
 ],
+       u3_t12:[
+
+      {
+        name: '   Semana 12 - Sem12_RActividadesDesarrollo.pdf',
+        data: 'carpeta1/Sem12_RActividadesDesarrollo.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+      {
+        name: '   Semana 10 - Manual de Azure .pdf',
+        data: 'carpeta1/Manual de Azure .pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+],
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
