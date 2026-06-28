@@ -964,7 +964,6 @@
     ],
       
   };
-  
   /* Combina archivos estáticos con los del storage para una semana */
   function getAllFilesForWeek(key) {
     const stored  = getWeekFiles(key);                // archivos subidos por admin
