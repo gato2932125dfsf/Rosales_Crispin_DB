@@ -965,8 +965,8 @@ u3_t10:[
         uploaded: 'Precargado', isStatic: true
       },
         {
-        name: '   Semana 10 - Sem10_Infografias.pdf',
-        data: 'carpeta1/Sem9_Esquemas.pdf',
+        name: '   Semana 10 - Sem10_Infografias de Aprendizaje.pdf',
+        data: 'carpeta1/Sem10_Infografias de Aprendizaje.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
