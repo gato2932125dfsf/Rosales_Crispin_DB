@@ -908,8 +908,7 @@
         data: 'carpeta1/Sem8_Resumen30SQL.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
-      }
-       
+      }  
     ],
      u3_t09: [
       {
@@ -963,8 +962,7 @@
         uploaded: 'Precargado', isStatic: true
       
     ],
-     
-     
+      
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
