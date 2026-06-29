@@ -995,14 +995,14 @@ u3_t10:[
        u3_t12:[
 
       {
-        name: '   Semana 12 - Sem12_RActividadesDesarrollo.pdf',
+        name: '   Semana 12 - Sem12_InfografiasDesarrollo.pdf',
         data: 'carpeta1/Sem12_RActividadesDesarrollo.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
       {
-        name: '   Semana 10 - Manual de Azure .pdf',
-        data: 'carpeta1/Manual de Azure .pdf',
+        name: '   Semana 12 - Sem12_RACTIVIDADES DE ESTUDIO.pdf',
+        data: 'carpeta1/Sem12_RACTIVIDADES DE ESTUDIO.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
