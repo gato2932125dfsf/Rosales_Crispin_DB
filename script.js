@@ -1007,6 +1007,49 @@ u3_t10:[
         uploaded: 'Precargado', isStatic: true
       }
 ],
+     u4_t13:[
+
+      {
+        name: '   Semana 13 - Sem13_Infografia.pdf.pdf',
+        data: 'carpeta1/Sem13_Infografia.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+      
+],
+     u4_t14:[
+
+      {
+        name: '   Semana 14 - Sem14_Infografia.pdf',
+        data: 'carpeta1/Sem14_Infografia.pdf.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+      {
+        name: '   Semana 14 - Sem14_Manual AWS.pdf',
+        data: 'carpeta1/Sem14_Manual AWS.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+],
+     u4_t15:[
+      {
+        name: '   Semana 15 - Sem15_Des Preguntas del Libro.pdf',
+        data: 'carpeta1/Sem15_Des Preguntas del Libro.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+      
+],
+     u4_t16:[
+
+      {
+        name: '   Semana 16 - Libro MSQLServer Azure.pdf',
+        data: 'carpeta1/Libro MSQLServer Azure.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      }
+],
   };
   
   /* Combina archivos estáticos con los del storage para una semana */
