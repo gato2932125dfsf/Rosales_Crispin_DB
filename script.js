@@ -1034,18 +1034,29 @@ u3_t10:[
 ],
      u4_t15:[
       {
-        name: '   Semana 15 - Sem15_Des Preguntas del Libro.pdf',
-        data: 'carpeta1/Sem15_Des Preguntas del Libro.pdf',
+        name: '   Semana 15 - Sem15_Desarrollo Preguntas del Libro (1).pdf',
+        data: 'carpeta1/Sem15_Desarrollo Preguntas del Libro (1).pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+      {
+        name: '   Semana 15 - Sem15_Libro MSQLServer Azure(1).pdf',
+        data: 'carpeta1/Sem15_Libro MSQLServer Azure(1).pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
       
 ],
      u4_t16:[
-
       {
-        name: '   Semana 16 - Libro MSQLServer Azure.pdf',
-        data: 'carpeta1/Libro MSQLServer Azure.pdf',
+        name: '   Semana 16 - Sem16_Desarrollo Preguntas del Libro (2).pdf',
+        data: 'carpeta1/Sem16_Desarrollo Preguntas del Libro (2).pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+      {
+        name: '   Semana 16 - Sem16_Libro MSQLServer Azure(2).pdf',
+        data: 'carpeta1/Sem16_Libro MSQLServer Azure(2).pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       }
