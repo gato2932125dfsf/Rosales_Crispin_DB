@@ -1021,7 +1021,7 @@ u3_t10:[
 
       {
         name: '   Semana 14 - Sem14_Infografia.pdf',
-        data: 'carpeta1/Sem14_Infografia.pdf.pdf',
+        data: 'carpeta1/Sem14_Infografia.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
