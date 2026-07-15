@@ -1014,6 +1014,12 @@ u3_t10:[
         data: 'carpeta1/Sem13_Infografia.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
+      },
+      {
+        name: '   Semana 13 - Sem13_Ejercicios.pdf',
+        data: 'carpeta1/Sem13_Ejercicios.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
       }
       
 ],
@@ -1022,6 +1028,12 @@ u3_t10:[
       {
         name: '   Semana 14 - Sem14_Infografia.pdf',
         data: 'carpeta1/Sem14_Infografia.pdf',
+        size: null, type: 'pdf', folder: 'carpeta1',
+        uploaded: 'Precargado', isStatic: true
+      },
+      {
+        name: '   Semana 14 - Sem14_Ejercicios.pdf',
+        data: 'carpeta1/Sem14_Ejercicios.pdf',
         size: null, type: 'pdf', folder: 'carpeta1',
         uploaded: 'Precargado', isStatic: true
       },
